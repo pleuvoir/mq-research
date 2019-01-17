@@ -5,11 +5,14 @@
 
 ### rabbitmq
 
-java 客户端原生用法
+#### java 客户端原生用法
 
-和 spring 集成后的用法
+* [发送普通消息](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/normal)
 
-springboot 中使用
+
+#### 和 spring 集成后的用法
+
+#### springboot 中使用
 
 ### activemq
 
