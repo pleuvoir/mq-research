@@ -7,7 +7,6 @@
 | :--------: | :---------: | :---------: | :---------: | 
 | [RabbitMQ](#RabbitMQ) | [ActiveMQ](#ActiveMQ)|[RocketMQ](#RocketMQ) | [Kafka](#Kafka) |
 
-****
 ## 目录
 
 * [RabbitMQ](#RabbitMQ)
