@@ -13,11 +13,12 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 /**
- * 普通消费者，使用 direct 类型交换器
+ * 队列和交换器的多重绑定，使用 direct 类型交换器 <b/>
+ * RabbitMQ 支持一个队列绑定多个路由键
  * @author pleuvoir
  *
  */
-public class NormalConsumer {
+public class MutilBindConsumer {
 
 	public static void main(String[] argv) throws IOException, TimeoutException {
 		// 创建连接，该地址为阿里云服务器地址 已开放 guest 远程访问权限
@@ -28,7 +29,7 @@ public class NormalConsumer {
 		connectionFactory.setPassword("guest");
 		Connection connection = connectionFactory.newConnection();
 
-		// 打开连接和创建频道，与发送端一样
+		// 打开连接和创建信道，与发送端一样
 		Channel channel = connection.createChannel();
 		channel.exchangeDeclare(Const.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
@@ -36,13 +37,14 @@ public class NormalConsumer {
 		//  上面的部分和生产者完全一样
 		// ########
 		
-		// 声明一个队列，注意队列是在消费者端声明的
-		String queueName = "focuserror";
-		channel.queueDeclare(queueName, false, false, false, null);
+		// 随机生成一个队列，如果在声明时未起名则会生成一个 amq.gen- 开头的队列
+		String queueName = channel.queueDeclare().getQueue();
+		//				   channel.queueDeclare(queueName, false, false, false, null);
 
-		// 绑定，将队列和交换器通过路由键进行绑定 表示只关注 error 级别的日志消息
-		String routekey = "error";
-		channel.queueBind(queueName, Const.EXCHANGE_NAME, routekey);
+		System.out.println("随机队列，" + queueName);
+		// 绑定，将队列和交换器通过路由键进行绑定   关注 error warning 级别的日志消息
+		channel.queueBind(queueName, Const.EXCHANGE_NAME, "error");
+		channel.queueBind(queueName, Const.EXCHANGE_NAME, "warning");
 
 		System.out.println("等待接收消息 ........");
 

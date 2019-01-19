@@ -8,6 +8,11 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+/**
+ * 普通生产者，使用 direct 类型交换器
+ * @author pleuvoir
+ *
+ */
 public class NormalProducer {
 
 	public static void main(String[] args) throws IOException, TimeoutException {
