@@ -1,0 +1,5 @@
+
+### RabbitMQ 总结
+
+在使用原生的 `Java` 客户端测试时发现，当 `channel.queueBind(queueName, Const.EXCHANGE_NAME, routekey);` 队列和交换机通过路由键进行绑定时，如果之前已经绑定过了，此次又换了路由键，那么这两个绑定都是存在的，可以通过管理控制台进行查看。收发消息时会发现之前绑定的依然生效，这点需要注意。
+

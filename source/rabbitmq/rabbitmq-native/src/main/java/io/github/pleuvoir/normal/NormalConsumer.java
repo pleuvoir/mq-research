@@ -28,7 +28,7 @@ public class NormalConsumer {
 		channel.exchangeDeclare(Const.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
 		// #########
-		//  上面的部分完全一样
+		//  上面的部分和生产者完全一样
 		// ########
 		
 		// 声明一个队列，注意队列是在消费者端声明的
