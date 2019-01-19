@@ -31,7 +31,7 @@ public class NormalConsumer {
 		//  上面的部分完全一样
 		// ########
 		
-		// 声明一个队列注意，队列是在消费者端声明的
+		// 声明一个队列，注意队列是在消费者端声明的
 		String queueName = "focuserror";
 		channel.queueDeclare(queueName, false, false, false, null);
 
