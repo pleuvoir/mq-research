@@ -24,6 +24,7 @@
 * [mandatory 投递失败通知](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/mandatory)
 * [发送方开启事务](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/transaction)
 * [发送方确认模式（确认、批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/producerconfirm)
+* [拉取消息](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/pullmessage)
 
 #### 集成 spring 
 

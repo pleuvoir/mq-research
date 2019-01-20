@@ -13,4 +13,6 @@ public interface Const {
 	String TRANSACTION_EXCHANGE_NAME = "transaction_test";
 	
 	String PRODUCER_CONFIRM_EXCHANGE_NAME = "producer_confirm_mode_test";
+	
+	String PULL_EXCHANGE_NAME = "pull_message_test";
 }
