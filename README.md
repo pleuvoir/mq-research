@@ -1,11 +1,12 @@
 
 :memo: 常用消息中间件的总结研究<br>
 
+
+<img src="docs/01 rabbitmq/RabbitMQ-logo.svg" width="80" height="80">
+
 | :bell: |:jack_o_lantern: | :loudspeaker:| :gift: |
 | :--------: | :---------: | :---------: | :---------: | 
 | [RabbitMQ](#one-RabbitMQ) | [ActiveMQ](#two-ActiveMQ)|[RocketMQ](#three-RocketMQ) | [Kafka](#four-Kafka) |
-
----
 
 ### :one: RabbitMQ
 
