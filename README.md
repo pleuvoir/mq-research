@@ -1,6 +1,6 @@
 
 
-## 常用消息中间件的总结研究。
+常用消息中间件的总结研究
 
 | :purple_heart: |:purple_heart: | :purple_heart: | :purple_heart: |
 | :--------: | :---------: | :---------: | :---------: | 
@@ -8,7 +8,7 @@
 
 ---
 
-## RabbitMQ
+## :one: RabbitMQ
 
 ### 环境准备
 
@@ -25,8 +25,8 @@
 
 ### 集成 springboot 
  
-## ActiveMQ
+## :two: ActiveMQ
  
-## RocketMQ
+## :three: RocketMQ
  
-## Kafka
+## :four: Kafka
