@@ -1,4 +1,4 @@
-package io.github.pleuvoir.normal;
+package io.github.pleuvoir.exchange.direct;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +13,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
+import io.github.pleuvoir.exchange.Const;
 import io.github.pleuvoir.kit.RabbitMQKit;
 
 /**
@@ -48,11 +49,11 @@ public class MulitConsumerOneQueue {
 			try {
 				// 创建信道
 				Channel channel = connection.createChannel();
-				channel.exchangeDeclare(Const.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
+				channel.exchangeDeclare(Const.DIRECT_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 				// 声明一个队列，如果队列已存在，不会重复创建
 				channel.queueDeclare(queueName, false, false, true, null);
 				// 只关注 info 的消息
-				channel.queueBind(queueName, Const.EXCHANGE_NAME, "info");
+				channel.queueBind(queueName, Const.DIRECT_EXCHANGE_NAME, "info");
 
 				System.out.println(Thread.currentThread().getName() +" 等待接收消息 ........");
 
