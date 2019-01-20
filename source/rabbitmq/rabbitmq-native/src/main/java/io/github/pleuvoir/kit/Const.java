@@ -11,4 +11,6 @@ public interface Const {
 	String MANDATORY_EXCHANGE_NAME = "mandatory_test";
 	
 	String TRANSACTION_EXCHANGE_NAME = "transaction_test";
+	
+	String PRODUCER_CONFIRM_EXCHANGE_NAME = "producer_confirm_mode_test";
 }
