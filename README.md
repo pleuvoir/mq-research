@@ -1,11 +1,12 @@
 
 
-> 对常用消息中间件的总结研究，不会对概念性的东西做出过多阐述，假定读者已经了解其基本使用，对用法做出总结。
-
+## 常用消息中间件的总结研究。
 
 | :purple_heart: |:purple_heart: | :purple_heart: | :purple_heart: |
 | :--------: | :---------: | :---------: | :---------: | 
 | [RabbitMQ](#RabbitMQ) | [ActiveMQ](#ActiveMQ)|[RocketMQ](#RocketMQ) | [Kafka](#Kafka) |
+
+---
 
 ## RabbitMQ
 
