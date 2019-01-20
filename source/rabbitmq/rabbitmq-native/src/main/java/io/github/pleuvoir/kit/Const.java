@@ -9,4 +9,6 @@ public interface Const {
 	String TOPIC_EXCHANGE_NAME = "machine_bussniess_logs";
 	
 	String MANDATORY_EXCHANGE_NAME = "mandatory_test";
+	
+	String TRANSACTION_EXCHANGE_NAME = "transaction_test";
 }

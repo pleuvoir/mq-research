@@ -27,3 +27,5 @@ channel.addReturnListener(new ReturnListener() {
 	}
 });
 ```
+
+发送消息时开启事务，性能下降严重，官方提出发送方确认模式。

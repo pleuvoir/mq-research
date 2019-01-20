@@ -19,5 +19,5 @@ public class RabbitMQKit {
 		connection = connectionFactory.newConnection();
 		return connection;
 	}
-
+	
 }
