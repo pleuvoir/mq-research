@@ -9,6 +9,10 @@
 
 ### :one: RabbitMQ
 
+#### 总结
+
+* [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01 rabbitmq/README.md)
+
 #### 环境准备
 
 * [在 Linux 中安装 RabbitMQ](https://pleuvoir.github.io/2017/09/28/rabbitmq-an-zhuang/)
