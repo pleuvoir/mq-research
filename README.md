@@ -11,7 +11,7 @@
 
 #### 总结
 
-[RabbitMQ 总结篇](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/README.md)
+:rocket: [RabbitMQ 总结篇](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/README.md)
 
 #### 环境准备
 
