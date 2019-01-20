@@ -11,7 +11,7 @@
 
 #### 总结
 
-* [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01 rabbitmq/README.md)
+[RabbitMQ 总结篇](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/README.md)
 
 #### 环境准备
 
