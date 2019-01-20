@@ -23,7 +23,7 @@ topic 可以实现占位符替换的功能， 按照约定的路由键动态配�
 在发送消息时设置 mandatory 标志，告诉R abbitMQ，如果消息不可路由，应该将消息返回给发送者，并通知失败。可以这样认为，开启mandatory是开启故障检测模式。
 注意：它只会让 RabbitMQ 向你通知失败，而不会通知成功。如果消息正确路由到队列，则发布者不会受到任何通知。带来的问题是无法确保发布消息一定是成功的，因为通知失败的消息可能会丢失。
 
-<img src="docs/01 rabbitmq/rabbitmq-producer.png">
+<img src="rabbitmq-producer.png">
 
 ```java
 channel.addReturnListener(new ReturnListener() {
@@ -54,11 +54,11 @@ channel.addReturnListener(new ReturnListener() {
 
 不可路由的消息，当交换器发现，消息不能路由到任何队列，会进行确认操作，表示收到了消息。如果发送方设置了 mandatory 模式,则会先调用 addReturnListener 监听器。
 
-<img src="docs/01 rabbitmq/rabbitmq-no-route.png">
+<img src="rabbitmq-no-route.png">
 
 可路由的消息，要等到消息被投递到所有匹配的队列之后，broker 会发送一个确认给生产者(包含消息的唯一 ID)，这就使得生产者知道消息已经正确到达目的队列了，如果消息和队列是可持久化的，那么确认消息会在将消息写入磁盘之后发出，broker 回传给生产者的确认消息中 delivery-tag 域包含了确认消息的序列号。
 
-<img src="docs/01 rabbitmq/rabbitmq-route.png">
+<img src="rabbitmq-route.png">
 
 confirm 模式最大的好处在于他可以是异步的，一旦发布一条消息，生产者应用程序就可以在等信道返回确认的同时继续发送下一条消息，当消息最终得到确认之后，生产者应用便可以通过回调方法来处理该确认消息，如果 RabbitMQ 因为自身内部错误导致消息丢失，就会发送一条 nack 消息，生产者应用程序同样可以在回调方法中处理该 nack 消息决定下一步的处理。
 
@@ -73,7 +73,7 @@ Confirm 三种实现方式：
 
 在第一次声明交换器时被指定，用来提供一种预先存在的交换器，如果主交换器无法路由消息，那么消息将被路由到这个新的备用交换器。
 
-如果发布消息时同时设置了mandatory会发生什么？如果主交换器无法路由消息，RabbitMQ并不会通知发布者，因为，向备用交换器发送消息，表示消息已经被路由了。注意，新的备用交换器就是普通的交换器，没有任何特殊的地方。
+如果发布消息时同时设置了 mandatory 会如何？ 如果主交换器无法路由消息，RabbitMQ 并不会通知发布者，因为，向备用交换器发送消息，表示消息已经被路由了。注意，新的备用交换器就是普通的交换器，没有任何特殊的地方。
 
 使用备用交换器，向往常一样，声明 Queue 和备用交换器，把 Queue 绑定到备用交换器上。然后在声明主交换器时，通过交换器的参数，alternate-exchange，将备用交换器设置给主交换器。
 建议备用交换器设置为 faout 类型，Queue绑定时的路由键设置为"#"，由于平时不会这么用所以也就没有写示例。
