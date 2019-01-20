@@ -12,7 +12,7 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import io.github.pleuvoir.exchange.Const;
+import io.github.pleuvoir.kit.Const;
 
 /**
  * 队列和交换器的多重绑定，使用 direct 类型交换器 <b/>

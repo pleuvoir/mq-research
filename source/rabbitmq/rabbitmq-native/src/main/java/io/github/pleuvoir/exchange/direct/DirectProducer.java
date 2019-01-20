@@ -8,7 +8,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-import io.github.pleuvoir.exchange.Const;
+import io.github.pleuvoir.kit.Const;
 
 /**
  * 普通生产者，使用 direct 类型交换器

@@ -11,7 +11,7 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import io.github.pleuvoir.exchange.Const;
+import io.github.pleuvoir.kit.Const;
 import io.github.pleuvoir.kit.RabbitMQKit;
 
 /**
