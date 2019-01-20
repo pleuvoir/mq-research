@@ -4,7 +4,7 @@
 
 
 
-| <img src="docs/01 rabbitmq/RabbitMQ-logo.svg" width="100" height="100"> |:jack_o_lantern: | :loudspeaker:| :gift: |
+| <img src="docs/01 rabbitmq/RabbitMQ-logo.svg" width="100" height="100"> |<img src="docs/02 activemq/activemq-logo.png" width="100" height="100"> | <img src="docs/03 rocketmq/rmq-logo.png" width="100" height="100"> | <img src="docs/04 kafka/logo.png" width="100" height="100">|
 | :--------: | :---------: | :---------: | :---------: | 
 | [RabbitMQ](#one-RabbitMQ) | [ActiveMQ](#two-ActiveMQ)|[RocketMQ](#three-RocketMQ) | [Kafka](#four-Kafka) |
 
