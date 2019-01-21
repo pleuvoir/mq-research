@@ -33,7 +33,7 @@ public class AsyncConfirmProducer {
 		// 创建信道
 		Channel channel = connection.createChannel();
 		// 创建持久化交换器，当生产者先发送消息 消费者再上线 则可以接收到 以前的消息
-		channel.exchangeDeclare(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, BuiltinExchangeType.DIRECT, true);
+		channel.exchangeDeclare(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
 	    // 启用发送者确认模式
         channel.confirmSelect();

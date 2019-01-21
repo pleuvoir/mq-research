@@ -1,4 +1,4 @@
-package io.github.pleuvoir.producerconfirm;
+package io.github.pleuvoir.consumerack;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -15,11 +15,11 @@ import com.rabbitmq.client.Envelope;
 import io.github.pleuvoir.kit.Const;
 
 /**
- * 异步确认消费者
+ * 普通消费者，使用 direct 类型交换器
  * @author pleuvoir
  *
  */
-public class AsyncConfirmConsumer {
+public class AckConsumer {
 
 	public static void main(String[] argv) throws IOException, TimeoutException {
 		// 创建连接，该地址为阿里云服务器地址 已开放 guest 远程访问权限
@@ -32,28 +32,42 @@ public class AsyncConfirmConsumer {
 
 		// 打开连接和创建频道，与发送端一样
 		Channel channel = connection.createChannel();
-		channel.exchangeDeclare(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
+		channel.exchangeDeclare(Const.DIRECT_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
+		// #########
+		//  上面的部分和生产者完全一样
+		// ########
+		
 		// 声明一个队列，注意队列是在消费者端声明的
-		String queueName = "async_confirm_mode_test_queue";
+		String queueName = "focuserror";
 		channel.queueDeclare(queueName, false, false, false, null);
 
 		// 绑定，将队列和交换器通过路由键进行绑定 表示只关注 error 级别的日志消息
 		String routekey = "error";
-		channel.queueBind(queueName, Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, routekey);
+		channel.queueBind(queueName, Const.DIRECT_EXCHANGE_NAME, routekey);
 
-		System.out.println("异步确认消费者等待接收消息 ........");
+		System.out.println("AckConsumer 等待接收消息 ........");
 
 		// 声明了一个消费者
 		final Consumer consumer = new DefaultConsumer(channel) {
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-				String message = new String(body, "UTF-8");
-				System.out.println("接受到路由键[" + envelope.getRoutingKey() + "]" + message);
+				try {
+					String message = new String(body, "UTF-8");
+					System.out.println("接受到路由键[" + envelope.getRoutingKey() + "]" + message);
+					
+					// 手动单条确认
+					channel.basicAck(envelope.getDeliveryTag(), false);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 拒绝
+					//channel.basicNack(deliveryTag, multiple, requeue);
+				}
 			}
 		};
-		// 消费者正式开始在指定队列上消费消息 ， true 代表自动 ack
-		channel.basicConsume(queueName, true, consumer);
+		// 消费者正式开始在指定队列上消费消息 ， false 代表手动 ack
+		channel.basicConsume(queueName, false, consumer);
 	}
 
 }

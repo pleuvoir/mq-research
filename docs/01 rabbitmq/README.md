@@ -16,7 +16,6 @@ direct 是发送方投递消息到交换机， RabbitMQ 根据路由键完全匹
 fanout 是发送方投递消息到交换机， RabbitMQ 直接忽略路由键发送消息到交换机绑定的队列，从而消费者就接收到了消息
 topic 可以实现占位符替换的功能， 按照约定的路由键动态配置，具体可参考示例 [topic 交换机](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/exchange/topic)
 
-创建持久化交换器，当生产者先发送消息 消费者再上线 则可以接收到以前的消息
 
 ### 3. 消息发布时的权衡
 
@@ -81,3 +80,8 @@ Confirm 三种实现方式：
 建议备用交换器设置为 faout 类型，Queue绑定时的路由键设置为"#"，由于平时不会这么用所以也就没有写示例。
 
 
+### 4. 消息接收时的权衡
+
+#### 手动 ACK
+
+当队列中的消息到达消费者后，如果开启手动 ACK 模式，那么 RabbitMQ 会一直等待收到应答，才会删除队列中的消息。什么时候会重发？当处理这条消息的消费者断开连接，RabbitMQ 会重新发送此消息。
