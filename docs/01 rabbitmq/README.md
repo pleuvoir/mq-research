@@ -9,7 +9,7 @@
 
 声明队列或者交换机时，如果之前已经有同名的则此次直接返回成功，但如果参数有所变化，那么 RabbitMQ 会抛出异常 `channel error; protocol method: #method<channel.close>(reply-code=406, reply-text=PRECONDITION_FAILED`，此时可以通过管理控制台近一步查看具体哪些属性不同，可以选择删除原配置或者新配置的声明改为和原来一致。
 
-一次 TCP 连接可以开启多个信道，每个信道可以同时有多个消费者，这些消费者可以同时消费同一个队列
+一次 TCP 连接可以开启多个信道，每个信道可以同时有多个消费者，这些消费者可以同时消费同一队列
 
 ### 2. 交换机的差异
 
@@ -86,3 +86,13 @@ Confirm 三种实现方式：
 #### 手动 ACK
 
 当队列中的消息到达消费者后，如果开启手动 ACK 模式，那么 RabbitMQ 会一直等待收到应答，才会删除队列中的消息。什么时候会重发？当处理这条消息的消费者断开连接，RabbitMQ 会重新发送此消息。
+
+#### QOS
+
+批量确认模式，需要自己实现确认的数量逻辑，当达到多少条时进行确认，具体可参照示例 [消费者 QOS（批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/qos) 当然如果没有确认，消息会发生堆积，Unacked 的消息会增加。未确认的消息，当消费者断开后同样会进行重发。
+
+```java
+// 开启 qos， 150 表示一次确认的条数， true 代表整个信道每次 150 ， false 是每个消费者一次 150 ，一般不会同时设置
+	channel.basicQos(150, true);
+```
+

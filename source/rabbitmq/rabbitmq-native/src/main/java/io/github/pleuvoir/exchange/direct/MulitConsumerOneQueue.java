@@ -28,7 +28,7 @@ public class MulitConsumerOneQueue {
 		String queueName = "队列" + ThreadLocalRandom.current().nextInt(9999999);
 
 		ExecutorService pool = Executors.newFixedThreadPool(100);
-		// 一个 TCP 连接创建了五个信道，每个信道对应 2 个消费者
+		// 一次 TCP 连接创建了五个信道，每个信道对应 2 个消费者
 		for (int i = 0; i < 5; i++) {
 			pool.execute(new ConsumerWorker(connection, queueName));
 		}
