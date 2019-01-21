@@ -1,1 +1,3 @@
 *.classpath
+*.prefs
+source/rabbitmq/rabbitmq-native/.project

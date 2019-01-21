@@ -7,7 +7,7 @@
 
 队列一般是伴随消费者创建的，生产者只关心交换机和消费者没有任何关系。
 
-声明队列或者交换机时，如果之前已经有同名的则此次直接返回成功，但如果参数有所变化，那么 RabbitMQ 会抛出异常，此时可以通过管理控制台近一步查看。
+声明队列或者交换机时，如果之前已经有同名的则此次直接返回成功，但如果参数有所变化，那么 RabbitMQ 会抛出异常 `channel error; protocol method: #method<channel.close>(reply-code=406, reply-text=PRECONDITION_FAILED`，此时可以通过管理控制台近一步查看具体哪些属性不同，可以选择删除原配置或者新配置的声明改为和原来一致。
 
 
 ### 2. 交换机的差异
@@ -16,6 +16,7 @@ direct 是发送方投递消息到交换机， RabbitMQ 根据路由键完全匹
 fanout 是发送方投递消息到交换机， RabbitMQ 直接忽略路由键发送消息到交换机绑定的队列，从而消费者就接收到了消息
 topic 可以实现占位符替换的功能， 按照约定的路由键动态配置，具体可参考示例 [topic 交换机](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/exchange/topic)
 
+创建持久化交换器，当生产者先发送消息 消费者再上线 则可以接收到以前的消息
 
 ### 3. 消息发布时的权衡
 

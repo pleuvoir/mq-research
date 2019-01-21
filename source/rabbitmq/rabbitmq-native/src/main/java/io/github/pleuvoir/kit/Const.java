@@ -14,5 +14,7 @@ public interface Const {
 	
 	String PRODUCER_CONFIRM_EXCHANGE_NAME = "producer_confirm_mode_test";
 	
+	String PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME = "producer_async_confirm_mode_test";
+	
 	String PULL_EXCHANGE_NAME = "pull_message_test";
 }
