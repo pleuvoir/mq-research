@@ -17,7 +17,7 @@ import io.github.pleuvoir.kit.Const;
 import io.github.pleuvoir.kit.RabbitMQKit;
 
 /**
- * 一个连接多个信道，并且多个消费者，同时消费一个队列，则会表现出消息在消费者之间的轮询发送。
+ * 一个连接多个信道，每个信道多个消费者，同时消费同一个队列，则会表现出消息在消费者之间的轮询发送。
  * @author pleuvoir
  *
  */
@@ -27,8 +27,8 @@ public class MulitConsumerOneQueue {
 		Connection connection = RabbitMQKit.createConnection();
 		String queueName = "队列" + ThreadLocalRandom.current().nextInt(9999999);
 
-		ExecutorService pool = Executors.newFixedThreadPool(3);
-		// 一个 TCP 连接创建了五个信道，并且创建了五个消费者
+		ExecutorService pool = Executors.newFixedThreadPool(100);
+		// 一个 TCP 连接创建了五个信道，每个信道对应 2 个消费者
 		for (int i = 0; i < 5; i++) {
 			pool.execute(new ConsumerWorker(connection, queueName));
 		}
@@ -57,16 +57,29 @@ public class MulitConsumerOneQueue {
 
 				System.out.println(Thread.currentThread().getName() +" 等待接收消息 ........");
 
-				DefaultConsumer defaultConsumer = new DefaultConsumer(channel) {
+				DefaultConsumer consumerA = new DefaultConsumer(channel) {
 					@Override
 					public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties,
 							byte[] body) throws IOException {
 
-						System.out.println(Thread.currentThread().getName() + " 接受到路由键[" + envelope.getRoutingKey()
+						System.out.println(Thread.currentThread().getName() + "consumerA 接受到路由键[" + envelope.getRoutingKey()
 								+ "]" + new String(body, "UTF-8"));
 					}
 				};
-				channel.basicConsume(queueName, true, defaultConsumer);
+				
+				channel.basicConsume(queueName, true, consumerA);
+				
+				DefaultConsumer consumerB = new DefaultConsumer(channel) {
+					@Override
+					public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties,
+							byte[] body) throws IOException {
+
+						System.out.println(Thread.currentThread().getName() + "consumerB 接受到路由键[" + envelope.getRoutingKey()
+								+ "]" + new String(body, "UTF-8"));
+					}
+				};
+				
+				channel.basicConsume(queueName, true, consumerB);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
