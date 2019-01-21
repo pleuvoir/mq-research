@@ -15,7 +15,7 @@ import com.rabbitmq.client.ReturnListener;
 import io.github.pleuvoir.kit.Const;
 
 /**
- * 发送方异步确认模式，需要消费者<br>
+ * 发送方异步确认模式
  * @author pleuvoir
  *
  */
@@ -60,12 +60,12 @@ public class AsyncConfirmProducer {
 		});
 		 
 		// 日志消息级别，作为路由键使用
-		String[] serverities = {"error", "info", "warning"};
-		for (int i = 0; i < 3; i++) {
-			String severity = serverities[i % 3];
+		String[] serverities = {"error", "warning"};
+		for (int i = 0; i < 100; i++) {
+			String severity = serverities[i % 2];
 			String msg = "Hello rabbitmq" + (i + 1);
 			
-			// 持久化并且路由失败通知 ?? TODO
+			// 路由失败通知 
 			channel.basicPublish(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, severity, true,
 					MessageProperties.PERSISTENT_BASIC, msg.getBytes());
 			
