@@ -34,6 +34,7 @@
 * [消费者单次 Reject 或批量 Nack](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/consumerack)
 * [消费者 QOS（批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/qos)
 * [死信队列的使用（消息过期、队列过期、被拒绝）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/deadletter)
+* [队列控制（持久化、消费者独占、队列过期删除、自动删除）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/queue)
 
 #### 集成 spring 
 
