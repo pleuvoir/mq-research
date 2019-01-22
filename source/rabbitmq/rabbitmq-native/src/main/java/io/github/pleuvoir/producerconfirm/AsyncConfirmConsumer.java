@@ -32,11 +32,10 @@ public class AsyncConfirmConsumer {
 
 		// 打开连接和创建频道，与发送端一样
 		Channel channel = connection.createChannel();
-		channel.exchangeDeclare(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
-
+		channel.exchangeDeclare(Const.PRODUCER_ASYNC_CONFIRM_EXCHANGE_NAME, BuiltinExchangeType.DIRECT, true);
 		// 声明一个队列，注意队列是在消费者端声明的
 		String queueName = "async_confirm_mode_test_queue";
-		channel.queueDeclare(queueName, false, false, false, null);
+		channel.queueDeclare(queueName, true, false, false, null);
 
 		// 绑定，将队列和交换器通过路由键进行绑定 表示只关注 error 级别的日志消息
 		String routekey = "error";
