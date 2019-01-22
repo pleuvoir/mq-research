@@ -11,6 +11,13 @@
 
 一次 TCP 连接可以开启多个信道，每个信道可以同时有多个消费者，这些消费者可以同时消费同一队列
 
+消息变成死信一般是以下几种情况：
+
+•	消息被拒绝，并且设置 requeue 参数为 false
+•	消息过期
+•	队列达到最大长度
+
+
 ### 2. 交换机的差异
 
 direct 是发送方投递消息到交换机， RabbitMQ 根据路由键完全匹配到后会路由到不同的队列，从而消费者就接收到了消息
@@ -96,7 +103,7 @@ Confirm 三种实现方式：
 #### 消费者业务出错拒绝
 
 消息确认可以让 RabbitMQ 知道消费者已经接受并处理完消息。但是如果消息本身或者消息的处理过程出现问题怎么办？需要一种机制，通知 RabbitMQ，这个消息，我无法处理，请让别的消费者处理。这里就有两种机制，Reject 和 Nack。
-Reject 在拒绝消息时，可以使用 requeue 标识，告诉 RabbitMQ 是否需要重新发送给别的消费者。不重新发送，一般这个消息就会被 RabbitMQ 丢弃。Reject一次只能拒绝一条消息，Nack 可以批量拒绝。具体可查看示例 [消费者单次 Reject 或批量 Nack）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/consumerack)
+Reject 在拒绝消息时，可以使用 requeue 标识，告诉 RabbitMQ 是否需要重新发送给别的消费者。不重新发送，一般这个消息就会被 RabbitMQ 丢弃，如果重新发送如果只有一个消费者可能会一直收到这条消息。Reject一次只能拒绝一条消息，Nack 可以批量拒绝。具体可查看示例 [消费者单次 Reject 或批量 Nack](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/consumerack)
 
 
 #### QOS
