@@ -32,7 +32,7 @@ public class Producer {
 		channel.exchangeDeclare(Const.DIRECT_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
 
 		// 日志消息级别，作为路由键使用
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 20; i++) {
 			String msg = "Hello rabbitmq" + (i + 1);
 			// 发布消息，需要参数：交换器，路由键，其中以日志消息级别为路由键
 			channel.basicPublish(Const.DIRECT_EXCHANGE_NAME, "error", null, msg.getBytes());

@@ -93,6 +93,12 @@ Confirm 三种实现方式：
 
 2. autoAck=true 如果自动确认为 true 的情况是不支持事务的，也就是说你即使在收到消息之后在回滚事务也是于事无补的，队列已经把消息移除了。
 
+#### 消费者业务出错拒绝
+
+消息确认可以让 RabbitMQ 知道消费者已经接受并处理完消息。但是如果消息本身或者消息的处理过程出现问题怎么办？需要一种机制，通知 RabbitMQ，这个消息，我无法处理，请让别的消费者处理。这里就有两种机制，Reject 和 Nack。
+Reject 在拒绝消息时，可以使用 requeue 标识，告诉 RabbitMQ 是否需要重新发送给别的消费者。不重新发送，一般这个消息就会被 RabbitMQ 丢弃。Reject一次只能拒绝一条消息，Nack 可以批量拒绝。具体可查看示例 [消费者单次 Reject 或批量 Nack）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/consumerack)
+
+
 #### QOS
 
 批量确认模式，需要自己实现确认的数量逻辑，当达到多少条时进行确认，具体可参照示例 [消费者 QOS（批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/qos) 当然如果没有确认，消息会发生堆积，Unacked 的消息会增加。未确认的消息，当消费者断开后同样会进行重发。
