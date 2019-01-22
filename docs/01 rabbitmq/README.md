@@ -120,7 +120,7 @@ Confirm 三种实现方式：
 Reject 在拒绝消息时，可以使用 requeue 标识，告诉 RabbitMQ 是否需要重新发送给别的消费者。不重新发送，一般这个消息就会被 RabbitMQ 丢弃，如果重新发送如果只有一个消费者可能会一直收到这条消息。Reject一次只能拒绝一条消息，Nack 可以批量拒绝。具体可查看示例 [消费者单次 Reject 或批量 Nack](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/consumerack)
 
 
-#### QOS
+#### QOS 消费者批量确认模式
 
 批量确认模式，需要自己实现确认的数量逻辑，当达到多少条时进行确认，具体可参照示例 [消费者 QOS（批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/qos) 当然如果没有确认，消息会发生堆积，Unacked 的消息会增加。未确认的消息，当消费者断开后同样会进行重发。
 
