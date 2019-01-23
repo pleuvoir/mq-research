@@ -44,6 +44,7 @@ public class Consumer {
 						.correlationId(properties.getMessageId())
 						.build();
 
+				// 如果使用  RabbitMQ 内置的交换机 队列名 = 路由键 
 				channel.basicPublish("", replyProps.getReplyTo(), replyProps, ("回复：" + message).getBytes());
           
 			}

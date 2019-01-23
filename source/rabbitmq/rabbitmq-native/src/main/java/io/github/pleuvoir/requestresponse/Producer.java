@@ -22,7 +22,8 @@ public class Producer {
 		
 		channel.exchangeDeclare(EXCHANGE, BuiltinExchangeType.DIRECT);
 		
-		// 响应 queue，消费者将会把要返回的信息发送到该 queue，注意这个队列没有绑定！
+		// 响应 queue，消费者将会把要返回的信息发送到该 queue，注意这个队列没有绑定！也没有交换机，使用了 RabbitMQ 内置的交换机，路由键则为队列名称
+		// 所以可以看到消费者应答时使用的路由键则为队列名
 		String responseQueue = channel.queueDeclare().getQueue();
 		String messageId = UUID.randomUUID().toString();
 		
