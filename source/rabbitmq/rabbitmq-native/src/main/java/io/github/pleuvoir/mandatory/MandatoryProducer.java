@@ -35,7 +35,7 @@ public class MandatoryProducer {
 			}
 		});
 
-		// 如果路又失败，则会回调这里
+		// 如果路由失败，则会回调这里
 		channel.addReturnListener(new ReturnListener() {
 			public void handleReturn(int replyCode, String replyText, String exchange, String routingKey,
 					AMQP.BasicProperties properties, byte[] body) throws IOException {
