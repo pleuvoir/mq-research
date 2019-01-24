@@ -40,6 +40,8 @@
 
 #### 集成 spring 
 
+* [集成 spring](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springmvc)
+
 #### 集成 springboot 
 
 ### :two: ActiveMQ
