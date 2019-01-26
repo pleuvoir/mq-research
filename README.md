@@ -1,5 +1,5 @@
 
-:memo: 常用消息中间件的总结研究<br>
+:rocket: 常用消息中间件的总结研究<br>
 
 | <img src="docs/01 rabbitmq/RabbitMQ-logo.svg" href="http://www.rabbitmq.com/" width="200" height="100"> |<img src="docs/02 activemq/activemq-logo.png"  href="http://activemq.apache.org/" width="200" height="100"> | <img src="docs/03 rocketmq/rmq-logo.png" href="http://rocketmq.apache.org/" width="200" height="100"> | <img src="docs/04 kafka/logo.png" href="http://kafka.apache.org/" width="200" height="100">|
 | :--------: | :---------: | :---------: | :---------: |
@@ -11,7 +11,7 @@
 
 #### 总结
 
-:rocket: [RabbitMQ 总结篇](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/README.md)
+:memo: [RabbitMQ 总结篇](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/README.md)
 
 #### 环境准备
 
@@ -40,9 +40,9 @@
 
 #### 集成 spring 
 
-* [集成 spring](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springmvc)
-* [Spring 中使用 RabbitMQ 总结] (todo)
-* 
+* [Spring 中使用 RabbitMQ 示例](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springmvc)
+* :memo: [Spring 中使用 RabbitMQ 总结](todo)
+
 #### 集成 springboot 
 
 ### :two: ActiveMQ
