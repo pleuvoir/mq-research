@@ -93,9 +93,9 @@ button{
 		<h2>Producer</h2>
 		<textarea id="message">我是消息</textarea>
 		<br>
-		<button onclick="send('direct')">发送 Direct 消息</button>
-		<button onclick="send('mandatoryWithNoneExchangeAndExistent')"> mandatory 路由失败测试</button>
-		<button onclick="send('mandatoryWithExchangeAndNonexistent')">存在交换机，但路由键是错的</button>
+		<button onclick="send('normalMessageProducer')">发送 Direct 消息</button> <br/><br/>
+		<button onclick="send('noExchangeProducer')">交换机、路由键都不存在（结果：NACKED，不会触发 mandatory）</button> <br/><br/>
+		<button onclick="send('producerWithConfirmAndReturnCallback')">生产者发送确认和故障检测（发布消息到不存在的路由键）</button> <br/><br/>
 		<br>
 		<span id="status"></span>
 	</div>

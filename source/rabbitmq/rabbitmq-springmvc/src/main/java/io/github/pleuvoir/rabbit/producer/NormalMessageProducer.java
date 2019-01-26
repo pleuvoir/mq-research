@@ -7,22 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.github.pleuvoir.kit.RabbitConst;
-import io.github.pleuvoir.model.dto.NormalMessage;
+import io.github.pleuvoir.rabbit.helper.RabbitMQProducer;
 
 @Component
-public class NormalMessageProducer {
-	
+public class NormalMessageProducer implements RabbitMQProducer {
+
 	private static Logger logger = LoggerFactory.getLogger(NormalMessageProducer.class);
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
-	
-	public void send(NormalMessage msg){
-
-		logger.info("【普通消息生产者】准备发送消息，payload：{}", msg.toJSON());
-	
-		rabbitTemplate.convertAndSend(RabbitConst.Normal.EXCHANGE, RabbitConst.Normal.ROUTING_KEY, msg.toJSON());
+	@Override
+	public void send(String data) {
+		logger.info("发送 Direct 消息，{}", data);
+		rabbitTemplate.convertAndSend(RabbitConst.Normal.EXCHANGE, RabbitConst.Normal.ROUTING_KEY, data);
 	}
 
 }

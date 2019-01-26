@@ -1,4 +1,7 @@
 
+
+spring 消费者抛出异常 消息会进行自动重发，原因 如下
+
 ### 消息应答的设置
 
 // TODO
@@ -109,3 +112,6 @@ public static boolean shouldRequeue(boolean defaultRequeueRejected, Throwable th
 		return shouldRequeue;
 	}
 ```
+
+
+rollbackOnExceptionIfNecessary 
