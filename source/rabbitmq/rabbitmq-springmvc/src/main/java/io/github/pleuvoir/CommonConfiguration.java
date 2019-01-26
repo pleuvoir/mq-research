@@ -67,10 +67,11 @@ public class CommonConfiguration {
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 		factory.setConnectionFactory(connectionFactory);
 		factory.setMaxConcurrentConsumers(20);
+		// 如果有3个 消费者，那么默认会创建 3个信道（一个信道一个消费者，原生 API 支持一个信道多个消费者），如果此处设置为 15 ，那么 会创建 45个信道， 45 个消费者
+		factory.setConcurrentConsumers(15);  
 		factory.setAcknowledgeMode(AcknowledgeMode.NONE); 
 		return factory;
 	}
-	
 	
 	@Bean  
     public SimpleMessageListenerContainer messageContainer(ConnectionFactory connectionFactory) {  
