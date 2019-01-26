@@ -1,4 +1,4 @@
-package io.github.pleuvoir.consumer;
+package io.github.pleuvoir.rabbit.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class NormalMessageConsumer {
 	@RabbitHandler
 	public void handler(String data) {
 		
-		logger.info("【普通消息消费者】已接收到消息，payload：{}", JSON.parseObject(data, NormalMessage.class).toJSON());
+		logger.info("NormalMessageConsumer 已接收到消息，payload：{}", data);
 	}
 
 }

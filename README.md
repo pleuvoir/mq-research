@@ -41,7 +41,8 @@
 #### 集成 spring 
 
 * [集成 spring](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springmvc)
-
+* [Spring 中使用 RabbitMQ 总结] (todo)
+* 
 #### 集成 springboot 
 
 ### :two: ActiveMQ

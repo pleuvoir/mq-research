@@ -1,4 +1,4 @@
-package io.github.pleuvoir.helper;
+package io.github.pleuvoir.rabbit.callback;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
@@ -17,6 +17,7 @@ public class ProducerPublisherConfirm implements RabbitTemplate.ConfirmCallback 
 		if (ack) {
 			System.out.println("发送者确认发送给 mq 成功");
 		} else {
+			// 当发送消息到不存在的交换机时会触发
 			// 处理失败的消息
 			System.out.println("发送者发送给mq失败，可以考虑重发，将信息入库定时任务重发 ..:" + cause);
 		}

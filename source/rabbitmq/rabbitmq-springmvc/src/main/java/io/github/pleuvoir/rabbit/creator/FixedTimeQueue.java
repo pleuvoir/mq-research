@@ -1,4 +1,4 @@
-package io.github.pleuvoir.creator;
+package io.github.pleuvoir.rabbit.creator;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

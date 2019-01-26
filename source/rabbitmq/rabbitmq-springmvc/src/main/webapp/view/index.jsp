@@ -1,11 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	System.out.println(path);
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	System.out.println(basePath);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -93,11 +91,11 @@ button{
 	<h1>Hello RabbitMQ</h1>
 	<div id="producer">
 		<h2>Producer</h2>
-		<textarea id="message"></textarea>
+		<textarea id="message">我是消息</textarea>
 		<br>
 		<button onclick="send('direct')">发送 Direct 消息</button>
-	<!-- 	<button onclick="send('fanoutSender')">发送 Fanout 消息</button>
-		<button onclick="send('topicSender')">发送 Topic 消息</button> -->
+		<button onclick="send('mandatoryWithNoneExchangeAndExistent')"> mandatory 路由失败测试</button>
+		<button onclick="send('mandatoryWithExchangeAndNonexistent')">存在交换机，但路由键是错的</button>
 		<br>
 		<span id="status"></span>
 	</div>

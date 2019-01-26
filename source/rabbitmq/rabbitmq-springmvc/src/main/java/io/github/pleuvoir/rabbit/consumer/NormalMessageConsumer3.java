@@ -1,4 +1,4 @@
-package io.github.pleuvoir.consumer;
+package io.github.pleuvoir.rabbit.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,26 +12,28 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 
 import io.github.pleuvoir.kit.RabbitConst;
-import io.github.pleuvoir.model.dto.FixedTimeMessage;
+import io.github.pleuvoir.model.dto.NormalMessage;
 
 
-@RabbitListener(
-		bindings = @QueueBinding(
-				value = @Queue(RabbitConst.FixedTime.QUEUE),
-				exchange = @Exchange(RabbitConst.FixedTime.EXCHANGE),
-				key = RabbitConst.FixedTime.ROUTING_KEY
-		)
-)
+//@RabbitListener(
+//		bindings = @QueueBinding(
+//				value = @Queue(RabbitConst.Normal.QUEUE),
+//				exchange = @Exchange(RabbitConst.Normal.EXCHANGE),
+//				key = RabbitConst.Normal.ROUTING_KEY
+//		)
+//)
+
+@RabbitListener(queues = RabbitConst.Normal.QUEUE)
 @Component
-public class FixedTimeMessageConsumer {
+public class NormalMessageConsumer3 {
 
-	private static Logger logger = LoggerFactory.getLogger(FixedTimeMessageConsumer.class);
+	private static Logger logger = LoggerFactory.getLogger(NormalMessageConsumer3.class);
 
 	
 	@RabbitHandler
 	public void handler(String data) {
 		
-		logger.info("【定时消息消费者】已接收到消息，payload：{}", JSON.parseObject(data, FixedTimeMessage.class).toJSON());
+		logger.info("NormalMessageConsumer3 已接收到消息，payload：{}", data);
 	}
 
 }

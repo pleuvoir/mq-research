@@ -1,4 +1,4 @@
-package io.github.pleuvoir.consumer;
+package io.github.pleuvoir.rabbit.consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

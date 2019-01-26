@@ -1,4 +1,4 @@
-package io.github.pleuvoir.producer;
+package io.github.pleuvoir.rabbit.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,9 +6,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.pleuvoir.creator.FixedTimeQueue;
 import io.github.pleuvoir.kit.RabbitConst;
 import io.github.pleuvoir.model.dto.FixedTimeMessage;
+import io.github.pleuvoir.rabbit.creator.FixedTimeQueue;
 
 @Component
 public class FixedTimeMessageProducer {

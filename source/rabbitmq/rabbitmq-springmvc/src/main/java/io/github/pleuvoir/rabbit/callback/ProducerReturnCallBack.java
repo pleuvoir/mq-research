@@ -1,4 +1,4 @@
-package io.github.pleuvoir.helper;
+package io.github.pleuvoir.rabbit.callback;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
