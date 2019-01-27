@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.github.pleuvoir.kit.RabbitConst;
-import io.github.pleuvoir.model.dto.DelayMessage;
+import io.github.pleuvoir.rabbit.helper.RabbitMQProducer;
 
 @Component
-public class DelayMessageProducer {
+public class DelayMessageProducer implements RabbitMQProducer{
 	
 	private static Logger logger = LoggerFactory.getLogger(DelayMessageProducer.class);
 
@@ -22,12 +22,13 @@ public class DelayMessageProducer {
 	private RabbitTemplate rabbitTemplate;
 
 	
-	public void send(DelayMessage msg){
-
-		logger.info("【延迟消息生产者】准备发送消息，payload：{}", msg.toJSON());
+	@Override
+	public void send(String data) {
+		
+		logger.info("【延迟消息生产者】准备发送消息，data：{}", data);
 
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime beginTime = msg.getBeginTime();
+		LocalDateTime beginTime = LocalDateTime.now().plusSeconds(5);
 		
 		long delayMillis  = Duration.between(now, beginTime).toMillis();
 
@@ -40,11 +41,10 @@ public class DelayMessageProducer {
 		
 		logger.info("消息理论在{}秒后到达战场", delaySeconds);
 		
-		rabbitTemplate.convertAndSend(RabbitConst.Begin.EXCHANGE, RabbitConst.Begin.ROUTING_KEY, msg.toJSON(), m -> {
+		rabbitTemplate.convertAndSend(RabbitConst.Begin.EXCHANGE, RabbitConst.Begin.ROUTING_KEY, data, m -> {
 				m.getMessageProperties().setExpiration(String.valueOf(delayMillis));
 				return m;
 		});
-		
 	}
 
 }

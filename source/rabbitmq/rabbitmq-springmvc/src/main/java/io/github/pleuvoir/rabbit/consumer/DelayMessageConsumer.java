@@ -9,10 +9,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSON;
-
 import io.github.pleuvoir.kit.RabbitConst;
-import io.github.pleuvoir.model.dto.DelayMessage;
 
 
 @RabbitListener(
@@ -30,8 +27,7 @@ public class DelayMessageConsumer {
 	
 	@RabbitHandler
 	public void handler(String data) {
-		
-		logger.info("【延迟消息消费者】已接收到消息，payload：{}", JSON.parseObject(data, DelayMessage.class).toJSON());
+		logger.info("【延迟消息消费者】已接收到消息，data：{}", data);
 	}
 
 }

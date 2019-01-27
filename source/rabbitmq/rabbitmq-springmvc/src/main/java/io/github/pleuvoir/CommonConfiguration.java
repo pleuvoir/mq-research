@@ -2,23 +2,19 @@ package io.github.pleuvoir;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.rabbitmq.client.Channel;
+import io.github.pleuvoir.rabbit.creator.fixedtime.FixedTimeQueueHelper;
 
 @Configuration
 @EnableRabbit
@@ -59,8 +55,9 @@ public class CommonConfiguration {
 		return factory;
 	}
 
-	/*
-	 * 消费者注解  {@RabbitListener} 需要用到
+	/**
+	 * 自动确认监听工厂
+	 * 消费者注解  {@RabbitListener} 需要用到，默认名称 是 rabbitListenerContainerFactory 注解也可以指定 RabbitListenerContainerFactory
 	 */
 	@Bean(name = "rabbitListenerContainerFactory")
 	public SimpleRabbitListenerContainerFactory getRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
@@ -68,38 +65,28 @@ public class CommonConfiguration {
 		factory.setConnectionFactory(connectionFactory);
 		factory.setMaxConcurrentConsumers(20);
 		// 如果有3个 消费者，那么默认会创建 3个信道（一个信道一个消费者，原生 API 支持一个信道多个消费者），如果此处设置为 15 ，那么 会创建 45个信道， 45 个消费者
-		factory.setConcurrentConsumers(15);  
+		factory.setConcurrentConsumers(1);  
 		factory.setAcknowledgeMode(AcknowledgeMode.NONE); 
 		return factory;
 	}
+
 	
-	@Bean  
-    public SimpleMessageListenerContainer messageContainer(ConnectionFactory connectionFactory) {  
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);  
-        container.setQueues(consumerAckQueue());  
-        container.setExposeListenerChannel(true);  
-        container.setMaxConcurrentConsumers(1);  
-        container.setConcurrentConsumers(1);  
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); //设置确认模式手工确认  
-        container.setMessageListener(new ChannelAwareMessageListener() {  
-            @Override  
-            public void onMessage(Message message, Channel channel) throws Exception {  
-                byte[] body = message.getBody();  
-                System.out.println("receive msg : " + new String(body));  
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); //确认消息成功消费  
-            }  
-        });  
-        return container;  
-    } 
-	
-	@Bean
-	public Queue consumerAckQueue() {
-		return new Queue("consumerAckQueue", true);
+	/**
+	 * 手动确认监听工厂
+	 */
+	@Bean(name = "manualRabbitListenerContainerFactory")
+	public SimpleRabbitListenerContainerFactory manualRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setMaxConcurrentConsumers(20);
+		factory.setConcurrentConsumers(1);  
+		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL); 
+		return factory;
 	}
 	
 	/*
 	 * 发布消息使用的模版，因而发送方的许多参数可以在这里设置<br>
-	 * 每一个消息情况不用，有的需要回调有的不需要，故使用多例
+	 * 每一个消息情况不同，有的需要回调有的不需要，使用同一个会报错，故使用多例
 	 */
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 	@Bean
@@ -111,6 +98,12 @@ public class CommonConfiguration {
 	@Bean(name = "rabbitAdmin")
 	public RabbitAdmin getRabbitAdmin(RabbitTemplate rabbitTemplate) {
 		return new RabbitAdmin(rabbitTemplate);
+	}
+	
+	// 临时队列小助手
+	@Bean
+	public FixedTimeQueueHelper fixedTimeQueueHelper(RabbitAdmin rabbitAdmin) {
+		return new FixedTimeQueueHelper(rabbitAdmin);
 	}
 
 }

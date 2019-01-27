@@ -35,7 +35,7 @@ public class AutoACKNormalMessageConsumer {
 	
 	@RabbitHandler
 	public void handler(@Payload String data, @Headers Map<String,Object> headers, Channel channel) throws IOException {
-		logger.info("AutoACKNormalMessageConsumer 已接收到消息，payload：{}", data);
+		logger.info("注解配合自动确认工厂，AutoACKNormalMessageConsumer 已接收到消息，payload：{}", data);
 	}
 
 
