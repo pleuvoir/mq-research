@@ -49,7 +49,7 @@
 
 #### 集成 springboot 
 
-* [Springboot 中使用 RabbitMQ 示例(和集成spring实现的功能一致)](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springboot)
+* [Springboot 中使用 RabbitMQ 示例 (和集成 spring 实现的功能一致)](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springboot)
 
 ### :two: ActiveMQ
 
