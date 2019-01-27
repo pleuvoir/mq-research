@@ -93,7 +93,7 @@ button{
 		<h2>Producer</h2>
 		<textarea id="message">我是消息</textarea>
 		<br>
-		<button onclick="send('normalMessageProducer')">发送 Direct 消息（同时测试自动应答和手动应答）</button> <br/><br/>
+		<button onclick="send('normalMessageProducer')">发送 Direct 消息（同时测试消费者自动应答和手动应答）</button> <br/><br/>
 		<button onclick="send('noExchangeProducer')">交换机、路由键都不存在（结果：NACKED，不会触发 mandatory）</button> <br/><br/>
 		<button onclick="send('producerWithConfirmAndReturnCallback')">生产者发送确认和故障检测（发布消息到不存在的路由键）</button> <br/><br/>
 		<button onclick="send('delayMessageProducer')">延迟消息（5 秒后被消费者收到，区别在 FIFO）</button> <br/><br/>

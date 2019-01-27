@@ -44,6 +44,8 @@ public Queue helloQueue() {
 
 排他队列会在消费者断开连接后自动删除
 
+在 springboot 中，默认消费者应答为 auto，当有异常抛向容器，容器会 requeue，如果只有一个消费者那么会无限重复，注意需要为 none 或者 manual.
+
 
 ### 2. 交换机的差异
 

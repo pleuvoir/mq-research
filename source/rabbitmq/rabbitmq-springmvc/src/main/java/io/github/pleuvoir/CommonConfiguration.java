@@ -86,7 +86,7 @@ public class CommonConfiguration {
 	
 	/*
 	 * 发布消息使用的模版，因而发送方的许多参数可以在这里设置<br>
-	 * 每一个消息情况不同，有的需要回调有的不需要，使用同一个会报错，故使用多例
+     * 每一个消息情况不同，有的需要回调有的不需要，使用同一个会报错，故使用多例，如果项目采用者手动确认则必须如此设置
 	 */
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 	@Bean

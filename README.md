@@ -41,15 +41,15 @@
 #### 集成 spring 
 
 * [Spring 中使用 RabbitMQ 示例](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springmvc)
-  - 发送 Direct 消息（同时测试自动应答和手动应答）
+  - 发送 Direct 消息（同时测试消费者自动应答和手动应答）
   - 交换机、路由键都不存在（结果：NACKED，不会触发 mandatory）
   - 生产者发送确认和故障检测（发布消息到不存在的路由键）
   - 延迟消息（5 秒后被消费者收到，区别在 FIFO）
   - 定时消息（5 秒后被消费者收到，依靠临时队列实现）
 
-* :memo: [Spring 中使用 RabbitMQ 总结](todo)
-
 #### 集成 springboot 
+
+* [Springboot 中使用 RabbitMQ 示例](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-springboot)
 
 ### :two: ActiveMQ
 

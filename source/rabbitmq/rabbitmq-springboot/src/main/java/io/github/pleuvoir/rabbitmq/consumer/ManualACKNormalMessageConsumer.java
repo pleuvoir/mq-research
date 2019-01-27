@@ -1,4 +1,4 @@
-package io.github.pleuvoir.rabbit.consumer;
+package io.github.pleuvoir.rabbitmq.consumer;
 
 import java.util.concurrent.ThreadLocalRandom;
 
