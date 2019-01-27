@@ -31,7 +31,7 @@ public class FixTimeMessageExampleTests {
 		for (int i = 0; i < num; i++) {
 			FixedTimeMessage msg = new FixedTimeMessage();
 			msg.setId(String.valueOf(i));
-			msg.setExcutetime(LocalDateTime.now().plusSeconds(10));
+			msg.setExcutetime(LocalDateTime.now().plusSeconds(5));
 			msg.setPayload("hello :boom: " + (i + 1));
 			new Thread(new ProducerThead(msg)).start();
 			countDownLatch.countDown();

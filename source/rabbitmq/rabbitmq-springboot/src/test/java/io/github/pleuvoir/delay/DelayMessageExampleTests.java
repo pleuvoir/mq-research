@@ -30,7 +30,7 @@ public class DelayMessageExampleTests {
 		
 		DelayMessage msg = new DelayMessage();
 		msg.setId("1");
-		msg.setBeginTime(LocalDateTime.now().plusSeconds(10));
+		msg.setBeginTime(LocalDateTime.now().plusSeconds(5));
 		
 		for (int i = 0; i < num; i++) {
 			new Thread(new ProducerThead(msg)).start();
