@@ -53,6 +53,7 @@
 * [生产者发送确认和故障检测（发布消息到不存在的路由键）](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springboot/src/test/java/io/github/pleuvoir/producerconfirm/ProducerWithConfirmAndReturnCallbackTest.java)
 * [延迟消息（5 秒后被消费者收到，区别在 FIFO）](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springboot/src/test/java/io/github/pleuvoir/delay/DelayMessageExampleTests.java)
 * [定时消息（5 秒后被消费者收到，依靠临时队列实现）](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springboot/src/test/java/io/github/pleuvoir/fixedtime/FixTimeMessageExampleTests.java)
+* [topic 交换机](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springboot/src/test/java/io/github/pleuvoir/topic/TopicExampleTests.java)
 
 ### :two: ActiveMQ
 

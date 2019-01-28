@@ -32,6 +32,11 @@ public class RabbitConst {
 		public static final String ROUTING_KEY 	= "r.normal";
 	}
 	
+	public static class Topic {
+
+		public static final String EXCHANGE 	= "x.topic";
+	}
+	
 	/**
 	 * 定时队列 （死信队列）
 	 */
