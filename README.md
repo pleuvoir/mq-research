@@ -11,14 +11,14 @@
 
 #### 总结
 
-:memo: [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ Summary.md)
+:memo: [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ%20Summary.md)
 
 #### 环境准备
 
 * :memo: [在 Linux 中安装 RabbitMQ](https://pleuvoir.github.io/2017/09/28/rabbitmq-an-zhuang/)
 * :memo: [在 Windows 中安装 RabbitMQ](https://github.com/pleuvoir/reference-samples/tree/master/spring-amqp-example)
 * :memo: [在 Windows 中安装 RabbitMQ 教程英文版](https://codenotfound.com/rabbitmq-download-install-windows.html)
-* :memo: [RabbitMQ 集群](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ HA.md)
+* :memo: [RabbitMQ 集群](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ%20HA.md)
 
 #### Java 客户端原生用法
 
