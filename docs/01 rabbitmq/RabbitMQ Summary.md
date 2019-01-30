@@ -5,11 +5,17 @@
 
 在使用原生的 Java 客户端测试时发现，当队列和交换机通过路由键进行绑定时，如果之前已经绑定过了，此次又换了路由键，那么这两个绑定都是存在的，可以通过管理控制台进行查看。收发消息时会发现之前绑定的依然生效，这点需要注意。
 
+声明队列或者交换机时，如果之前已经有同名的则此次直接返回成功，但如果参数有所变化，那么 RabbitMQ 会抛出异常 `channel error; protocol method: #method<channel.close>(reply-code=406, reply-text=PRECONDITION_FAILED`，此时可以通过管理控制台近一步查看具体哪些属性不同，可以选择删除原配置或者新配置的声明改为和原来一致。
+
 队列一般是伴随消费者创建的，生产者只关心交换机和消费者没有任何关系。
 
 消费者只关心队列。
 
-声明队列或者交换机时，如果之前已经有同名的则此次直接返回成功，但如果参数有所变化，那么 RabbitMQ 会抛出异常 `channel error; protocol method: #method<channel.close>(reply-code=406, reply-text=PRECONDITION_FAILED`，此时可以通过管理控制台近一步查看具体哪些属性不同，可以选择删除原配置或者新配置的声明改为和原来一致。
+排他队列会在消费者断开连接后自动删除。
+
+在 springboot 中，默认消费者应答为 auto，当有异常抛向容器，容器会 requeue，如果只有一个消费者那么会无限重复，注意需要为 none 或者 manual.
+
+在 spring，最方便的绑定就是使用 `@RabbitListener` 注解。
 
 一次 TCP 连接可以开启多个信道，每个信道可以同时有多个消费者，这些消费者可以同时消费同一队列。
 
@@ -27,9 +33,7 @@
 
 单个队列中给消息设置过期时间，满足 FIFO 原则，即队列消息的过期时间必须是递增的，否则会出现队中的消息已到过期时间，但是队首的时间未到，那么队首的时间到达后会发现队中消息和队首消息一起到达死信队列。
 
-消息的持久化
-
-默认情况下，队列和交换器在服务器重启后都会消失，消息当然也是。将队列和交换器的 durable 属性设为 true，缺省为 false，但是消息要持久化还不够，还需要将消息在发布前，将投递模式设置为 2。消息要持久化，必须要有持久化的队列、交换器和投递模式都为 2。
+消息的持久化设置：默认情况下，队列和交换器在服务器重启后都会消失，消息当然也是。将队列和交换器的 durable 属性设为 true，缺省为 false，但是消息要持久化还不够，还需要将消息在发布前，将投递模式设置为 2。消息要持久化，必须要有持久化的队列、交换器和投递模式都为 2。
 
 如下这种声明队列的方式，会和 RabbitMQ 默认的交换机进行绑定，而路由键则是此处声明队列的名称。
 
@@ -41,13 +45,6 @@ public Queue helloQueue() {
     return new Queue("hello-queue");
 }
 ```
-
-排他队列会在消费者断开连接后自动删除
-
-在 springboot 中，默认消费者应答为 auto，当有异常抛向容器，容器会 requeue，如果只有一个消费者那么会无限重复，注意需要为 none 或者 manual.
-
-在 spring，最方便的绑定就是使用 `@RabbitListener` 
-
 
 ### 2. 交换机的差异
 
@@ -149,7 +146,12 @@ Reject 在拒绝消息时，可以使用 requeue 标识，告诉 RabbitMQ 是否
 批量确认模式，需要自己实现确认的数量逻辑，当达到多少条时进行确认，具体可参照示例 [消费者 QOS（批量确认）](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/rabbitmq-native/src/main/java/io/github/pleuvoir/qos) 当然如果没有确认，消息会发生堆积，Unacked 的消息会增加。未确认的消息，当消费者断开后同样会进行重发。
 
 ```java
-// 开启 qos， 150 表示一次确认的条数， true 代表整个信道每次 150 ， false 是每个消费者一次 150 ，一般不会同时设置
+// 开启 qos， 150 表示一次确认的条数， true 代表整个信道每次 150 ， false 是每个消费者一次 150
 channel.basicQos(150, true);
 ```
 
+注意：消费者要使用 QOS 前提是开启了手动确认。另外，还可以基于 consume 和 channel 的粒度进行设置（global）。
+prefetchCount：会告诉 RabbitMQ 不要同时给一个消费者推送多于 N 个消息，即一旦有 N 个消息还没有 ack，则该 consumer 将阻塞，该特性可用来防止高并发数据库连接打满。
+global：true/false 是否将上面设置应用于 channel，简单点说，就是上面限制是 channel 级别的还是 consumer 级别。
+
+有关数据表明，2500 左右的 QOS 可靠性和性能较优。
