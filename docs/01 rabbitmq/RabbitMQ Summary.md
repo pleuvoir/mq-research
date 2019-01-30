@@ -151,7 +151,9 @@ channel.basicQos(150, true);
 ```
 
 注意：消费者要使用 QOS 前提是开启了手动确认。另外，还可以基于 consume 和 channel 的粒度进行设置（global）。
+
 prefetchCount：会告诉 RabbitMQ 不要同时给一个消费者推送多于 N 个消息，即一旦有 N 个消息还没有 ack，则该 consumer 将阻塞，该特性可用来防止高并发数据库连接打满。
+
 global：true/false 是否将上面设置应用于 channel，简单点说，就是上面限制是 channel 级别的还是 consumer 级别。
 
 有关数据表明，2500 左右的 QOS 可靠性和性能较优。
