@@ -201,7 +201,7 @@ concurrentConsumers、maxConcurrentConsumers、prefetchCount 的说明
 
 `setConcurrentConsumers` 和 `setMaxConcurrentConsumers` 都会触发 addAndStartConsumers (增加并启动消费者) 方法。实际上会创建 `AsyncMessageProcessingConsumer` 线程，该线程在启动时会尝试加入之前的连接或者创建一个新的信道。即如果程序中有三个消费者，启动时设置 `setConcurrentConsumers(1)` ，那么会有三个信道被创建。
 
-spring 默认使用 BlockingQueue 来存储消息，队列大小为 prefetchCount 的值，`this.queue = new LinkedBlockingQueue<Delivery>(prefetchCount)`，broker 一次会给单个消费者 prefetchCount 条数的消息 `channel.basicQos(this.prefetchCount)`，这些消息都会被放到 BlockingQueue 队列中。prefetchCount 如果设置的过小且消费者设置的过少则会导致阻塞队列中消息消费太慢，broker 往阻塞队列中 put 时一直阻塞，吞吐大量下降。所以可以利用 BlockingQueue 的机制实现削峰，举例：如果设置 prefetchCount 为 2500 ，setConcurrentConsumers 和 setMaxConcurrentConsumers 都为 1，那么程序会从 broker 一次拉取 2500 条消息，并且将它放入阻塞队列，这些消息会被一个消费者消费。当然消息会随着 ACK 的增多不断的一直往应用程序的阻塞队列中丢（会告诉 RabbitMQ 不要同时给一个消费者推送多于 N 个消息，即一旦有 N 个消息还没有ack，则该 consumer 将 block 掉，直到有消息 ack），这样就限制了突然增加的压力。因为消息到达 MQ ，被 spring 的内建消费者消费有可能被 broker 阻塞，之后加入内存阻塞队列这个过程已经完成了串行化，我们只是设置一次能处理的条数，当然这个条数需要结合自己的应用程序来把控。
+spring 默认使用 BlockingQueue 来存储消息，队列大小为 prefetchCount 的值，`this.queue = new LinkedBlockingQueue<Delivery>(prefetchCount)`，broker 一次会给单个消费者 prefetchCount 条数的消息 `channel.basicQos(this.prefetchCount)`，这些消息都会被放到 BlockingQueue 队列中。prefetchCount 如果设置的过小且消费者设置的过少则会导致阻塞队列中消息消费太慢，broker 往阻塞队列中 put 时一直阻塞，吞吐大量下降。我们可以利用 BlockingQueue 的机制实现削峰，举例：如果设置 prefetchCount 为 2500 ，setConcurrentConsumers 和 setMaxConcurrentConsumers 都为 1，那么程序会从 broker 一次拉取 2500 条消息，并且将它放入阻塞队列，这些消息会被一个消费者消费。当然消息会随着 ACK 的增多不断的往应用程序的阻塞队列中丢（原生的 prefetchCount 告诉 RabbitMQ 不要同时给一个消费者推送多于 N 个消息，即一旦有 N 个消息还没有 ack，则该 consumer 将 block 掉，直到有消息 ack），这样就限制了突然增加的压力。因为消息到达 MQ ，被 spring 的内建消费者消费有可能被 broker 阻塞，之后加入内存阻塞队列这个过程已经完成了串行化，我们只是设置一次能处理的条数，当然这个条数需要结合自己的应用程序来把控。
 最好是设置为手动应答，这样就可以利用 qos 机制，一次拉取 prefetchCount 同时丢入 prefetchCount 大小的队列中，完美。
 
 
@@ -213,7 +213,7 @@ for (int i = 0; i < delta; i++) {
 	this.consumers.add(consumer);
 	AsyncMessageProcessingConsumer processor = new AsyncMessageProcessingConsumer(consumer);
 	getTaskExecutor().execute(processor); // 该线程会一直从阻塞队列 take 消息，take 到消息后调用 messageListener 。
-    // 阻塞队列的消息是 一个内部消费者将从 broker 获取的内容不断 put 进去的
+	// 阻塞队列的消息是 一个内部消费者将从 broker 获取的内容不断 put 进去的
 ｝
 ```
 
