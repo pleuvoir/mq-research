@@ -1,0 +1,61 @@
+============VirtualBox中的虚拟机构建RabbitMQ集群
+
+======已安装好RabbitMQ的虚拟机镜像，命名为node1，假设ip地址为192.168.56.103
+======修改 /etc/hosts
+vi /etc/hosts
+======加入
+192.168.56.103 node1
+192.168.56.101 node2
+======将01的hostname修改为node01
+vi /etc/hostname
+
+======将node1虚拟机镜像拷贝一份，命名为node2，假设ip地址为192.168.56.101
+======确保启动后两者可以通过ssh命令互联
+======修改node2 /etc/hosts
+vi /etc/hosts
+======加入
+192.168.56.103 node1
+192.168.56.101 node2
+======将node2的hostname修改为node2
+vi /etc/hostname
+
+======将node1上/var/lib/rabbitmq/.erlang.cookie内容拷贝至node2的.erlang.cookie中，由于这个文件权限是400，所以======需要先修改node2中的该文件权限为 777，拷贝完成后，最后将权限和所属用户/组修改回来。
+chown 777 .erlang.cookie
+复制内容
+chown 400 .erlang.cookie
+
+======node1和node2均要执行
+firewall-cmd --permanent --add-port=15672/tcp
+firewall-cmd --permanent --add-port=5672/tcp
+firewall-cmd --permanent --add-port=25672/tcp
+firewall-cmd --permanent --add-port=4369/tcp
+firewall-cmd --reload
+======如果怀疑有端口未打开，使用以下命令检查，返回yes表示成功
+firewall-cmd --query-port=4369/tcp
+
+
+======启动node1和node2的RabbitMQ
+service rabbitmq-server start
+======方便操作使用 service rabbitmq-server stop
+======方便操作使用 service rabbitmq-server status
+======如果node2的RabbitMQ启动失败，需要
+vi /etc/rabbitmq/rabbitmq-env.conf
+======加入
+NODENAME=rabbit2@node2
+======再次启动node2的RabbitMQ
+
+======在node2上执行
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl join_cluster rabbit@node1
+======内存节点则是 rabbitmqctl join_cluster rabbit@node1 --ram
+rabbitmqctl start_app
+
+======检查集群状态（node1和node2均可）
+rabbitmqctl cluster_status
+
+======移除集群中的node2
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl start_app
+

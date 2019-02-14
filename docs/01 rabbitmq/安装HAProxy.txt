@@ -1,0 +1,69 @@
+============下载并解压============
+cd /usr/local/src/
+wget http://pkgs.fedoraproject.org/repo/pkgs/haproxy/haproxy-1.7.9.tar.gz/sha512/d1ed791bc9607dbeabcfc6a1853cf258e28b3a079923b63d3bf97504dd59e64a5f5f44f9da968c23c12b4279e8d45ff3bd39418942ca6f00d9d548c9a0ccfd73/haproxy-1.7.9.tar.gz
+tar zxvf haproxy-1.7.9.tar.gz
+
+============安装============
+cd haproxy-1.7.9
+uname -r
+3.10.0-514.el7.x86_64
+make TARGET=linux310 ARCH=x86_64 PREFIX=/usr/local/haproxy
+make install PREFIX=/usr/local/haproxy
+
+==参数说明：
+==TARGET=linux310，内核版本，使用uname -r查看内核，如：3.10.0-514.el7，此时该参数就为linux310；kernel ==大于2.6.28的可以用：TARGET=linux2628；
+==ARCH=x86_64，系统位数；
+==PREFIX=/usr/local/haprpxy #/usr/local/haprpxy，为haprpxy安装路径。
+
+============添加配置文件============
+cd /usr/local/haproxy
+mkdir conf
+cd conf/
+vim haproxy.cfg
+ 
+global
+        log 127.0.0.1   local0
+        maxconn 1000
+        daemon
+ 
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        retries 3
+        timeout connect 5000
+        timeout client  50000
+        timeout server 50000
+ 
+listen admin_stats
+        bind 0.0.0.0:1080
+        mode http
+        option httplog
+        maxconn 10
+        stats refresh 30s
+        stats uri /stats
+        stats realm XingCloud\ Haproxy
+        stats auth admin:admin
+        stats auth  Frank:Frank
+        stats hide-version
+        stats  admin if TRUE
+		
+listen rabbitmq_cluster
+        bind 0.0.0.0:5670
+        mode tcp
+        balance roundrobin
+		server rabbit01 127.0.0.1:5672 check inter 5000 rise 2 fall 3
+		server rabbit02 node2:5672 check inter 5000 rise 2 fall 3
+        
+		
+		
+============启动haproxy============
+/usr/local/haproxy/sbin/haproxy -f /usr/local/haproxy/conf/haproxy.cfg
+
+============验证============
+lsof -i :1080
+
+============访问统计页面============
+http://127.0.0.1:1080/stats
+
