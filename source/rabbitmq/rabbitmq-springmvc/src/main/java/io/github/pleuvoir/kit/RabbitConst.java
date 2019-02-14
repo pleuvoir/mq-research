@@ -32,6 +32,16 @@ public class RabbitConst {
 		public static final String ROUTING_KEY 	= "r.normal";
 	}
 	
+	// 通知队列
+	public static class Notify {
+
+		public static final String EXCHANGE 	= "x.notify";
+
+		public static final String QUEUE 		= "q.notify";
+
+		public static final String ROUTING_KEY 	= "r.notify";
+	}
+	
 	/**
 	 * 定时队列 （死信队列）
 	 */

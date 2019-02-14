@@ -13,6 +13,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.client.RestTemplate;
 
 import io.github.pleuvoir.rabbit.creator.fixedtime.FixedTimeQueueHelper;
 
@@ -105,6 +106,12 @@ public class CommonConfiguration {
 	@Bean
 	public FixedTimeQueueHelper fixedTimeQueueHelper(RabbitAdmin rabbitAdmin) {
 		return new FixedTimeQueueHelper(rabbitAdmin);
+	}
+	
+	// http 测试
+	@Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
 	}
 
 }

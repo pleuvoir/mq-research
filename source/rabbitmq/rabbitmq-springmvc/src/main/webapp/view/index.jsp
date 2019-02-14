@@ -98,6 +98,7 @@ button{
 		<button onclick="send('producerWithConfirmAndReturnCallback')">生产者发送确认和故障检测（发布消息到不存在的路由键）</button> <br/><br/>
 		<button onclick="send('delayMessageProducer')">延迟消息（5 秒后被消费者收到，区别在 FIFO）</button> <br/><br/>
 		<button onclick="send('fixedTimeMessageProducer')">定时消息（5 秒后被消费者收到，依靠临时队列实现）</button> <br/><br/>
+		<button onclick="send('httpPostMockProducer')">模拟支付成功异步阶梯通知</button> <br/><br/>
 		<br>
 		<span id="status"></span>
 	</div>

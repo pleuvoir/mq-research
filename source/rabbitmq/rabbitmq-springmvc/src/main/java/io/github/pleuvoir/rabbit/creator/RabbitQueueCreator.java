@@ -27,7 +27,7 @@ public class RabbitQueueCreator {
 		createBeginDelayQueueGroup();
 		// 创建普通队列
 		createNormalQueue();
-		// 创建定时队列
+		// 创建定时队列的实际消费队列，当然也可以直接通过 @RabbitListener 创建
 		createTimeFixedQueue();
 	}
 
