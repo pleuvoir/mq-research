@@ -46,6 +46,40 @@ public Queue helloQueue() {
 }
 ```
 
+监听工厂的配置
+
+```
+/**
+ * 自动确认监听工厂
+ * 消费者注解  {@RabbitListener} 需要用到，默认名称 是 rabbitListenerContainerFactory 注解也可以指定 RabbitListenerContainerFactory
+ */
+@Bean(name = "rabbitListenerContainerFactory")
+public SimpleRabbitListenerContainerFactory getRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+	SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+	factory.setConnectionFactory(connectionFactory);
+	factory.setMaxConcurrentConsumers(20);
+	// 代码中现在使用自动监听的如果有3个 消费者，如果此处不设置那么默认为1，那么会为每个消费者创建一个信道，即创建 3个信道（一个信道一个消费者，原生 API 支持一个信道多个消费者）
+	// 如果此处设置为 15 ，那么 会创建 45个信道， 应用程序层面的 45 个消费者
+	factory.setConcurrentConsumers(2);  
+	factory.setAcknowledgeMode(AcknowledgeMode.NONE); 
+	return factory;
+}
+
+
+/**
+ * 手动确认监听工厂
+ */
+@Bean(name = "manualRabbitListenerContainerFactory")
+public SimpleRabbitListenerContainerFactory manualRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+	SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+	factory.setConnectionFactory(connectionFactory);
+	factory.setMaxConcurrentConsumers(20);
+	factory.setConcurrentConsumers(1);  
+	factory.setAcknowledgeMode(AcknowledgeMode.MANUAL); 
+	return factory;
+}
+```
+
 ### 2. 交换机的差异
 
 direct 是发送方投递消息到交换机， RabbitMQ 根据路由键完全匹配到后会路由到不同的队列，从而消费者就接收到了消息
