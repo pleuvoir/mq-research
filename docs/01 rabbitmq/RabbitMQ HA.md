@@ -1,5 +1,5 @@
 
-## RabbitMQ 集群
+## RabbitMQ 集群高可用
 
 ### 使用HAProxy 
 
@@ -170,29 +170,34 @@ args.put("x-ha-policy", "all");
 //在声明队列时传入
 channel.queueDeclare(queueName,false,false, false, args);
 ```
+一般不会通过代码去控制镜像队列，太死板
 
 通过控制台添加策略
 
 镜像队列的配置通过添加policy完成，policy添加的命令为：
+```
 rabbitmqctl set_policy [-p Vhost] Name Pattern Definition [Priority]
 -p Vhost： 可选参数，针对指定vhost下的queue进行设置
 Name: policy的名称
 Pattern: queue的匹配模式(正则表达式)
 Definition：镜像定义，包括三个部分ha-mode, ha-params, ha-sync-mode
 ha-mode:指明镜像队列的模式，有效值为 all/exactly/nodes
-    all：表示在集群中所有的节点上进行镜像
-    exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定
-    nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定
+all：表示在集群中所有的节点上进行镜像
+exactly：表示在指定个数的节点上进行镜像，节点的个数由ha-params指定
+nodes：表示在指定的节点上进行镜像，节点名称通过ha-params指定
 ha-params：ha-mode模式需要用到的参数
 ha-sync-mode：进行队列中消息的同步方式，有效值为automatic和manual
-
 priority：可选参数，policy的优先级
+```
+
 例如，对队列名称以"queue_"开头的所有队列进行镜像，并在集群的两个节点上完成进行，policy的设置命令为：
 `rabbitmqctl set_policy ha-queue-two "^queue_" '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'`
 windows下将单引号改为双引号(rabbitmqctl set_policy ha-all "^ha." "{""ha-mode"":""all""}")
 
 补充：
+
 可通过如下命令确认哪些salve在同步：
+
 `rabbitmqctl list_queues name slave_pids synchronised_slave_pids`
 
 手动同步queue：
@@ -200,4 +205,10 @@ windows下将单引号改为双引号(rabbitmqctl set_policy ha-all "^ha." "{""h
 
 取消queue同步：
 `rabbitmqctl cancel_sync_queue name`
+
+
+有一篇博客讲的比较详细，可供参考
+
+[https://blog.csdn.net/u013256816/article/details/71097186](https://blog.csdn.net/u013256816/article/details/71097186 "RabbitMQ之镜像队列")
+
 
