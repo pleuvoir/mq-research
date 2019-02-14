@@ -191,8 +191,10 @@ priority：可选参数，policy的优先级
 ```
 
 例如，对队列名称以"queue_"开头的所有队列进行镜像，并在集群的两个节点上完成进行，policy的设置命令为：
-`rabbitmqctl set_policy ha-queue-two "^queue_" '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'`
+```
+rabbitmqctl set_policy ha-queue-two "^queue_" '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'
 windows下将单引号改为双引号(rabbitmqctl set_policy ha-all "^ha." "{""ha-mode"":""all""}")
+```
 
 补充：
 

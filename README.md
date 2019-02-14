@@ -13,6 +13,10 @@
 
 :memo: [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ%20Summary.md)
 
+#### 参考资料
+
+[https://blog.csdn.net/u013256816](https://blog.csdn.net/u013256816 "朱小厮的博客")
+
 #### 环境准备
 
 * :memo: [在 Linux 中安装 RabbitMQ](https://pleuvoir.github.io/2017/09/28/rabbitmq-an-zhuang/)
