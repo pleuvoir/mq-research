@@ -52,6 +52,7 @@
 * [延迟消息（5 秒后被消费者收到，区别在 FIFO）](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springmvc/src/main/java/io/github/pleuvoir/rabbit/producer/DelayMessageProducer.java)
 * [定时消息（5 秒后被消费者收到，依靠临时队列实现）](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springmvc/src/main/java/io/github/pleuvoir/rabbit/producer/FixedTimeMessageProducer.java)
 * [模拟支付成功异步阶梯通知](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springmvc/src/main/java/io/github/pleuvoir/rabbit/consumer/NotifyMessageConsumer.java)
+* [流量削峰](https://github.com/pleuvoir/mq-research/blob/master/source/rabbitmq/rabbitmq-springmvc/src/main/java/io/github/pleuvoir/rabbit/consumer/RateLimitConsumer.java)
 
 #### 集成 springboot 
 

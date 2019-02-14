@@ -32,6 +32,15 @@ public class RabbitConst {
 		public static final String ROUTING_KEY 	= "r.normal";
 	}
 	
+	public static class RateLimit {
+
+		public static final String EXCHANGE 	= "x.rateLimit";
+
+		public static final String QUEUE 		= "q.rateLimit";
+
+		public static final String ROUTING_KEY 	= "r.rateLimit";
+	}
+	
 	// 通知队列
 	public static class Notify {
 

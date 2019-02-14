@@ -65,8 +65,8 @@ public class CommonConfiguration {
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 		factory.setConnectionFactory(connectionFactory);
 		factory.setMaxConcurrentConsumers(20);
-		// 代码中现在使用自动监听的如果有3个 消费者，如果此处不设置那么默认为1，那么会为每个消费者创建一个信道，即创建 3个信道（一个信道一个消费者，原生 API 支持一个信道多个消费者）
-		// 如果此处设置为 15 ，那么 会创建 45个信道， 应用程序层面的 45 个消费者
+		// 代码中现在使用自动监听的如果有3个 消费者，如果此处不设置那么默认为1，会为每一个被 @RabbitListener 标记的消费者创建一个信道，即创建 3个信道（一个信道一个消费者，原生 API 支持一个信道多个消费者）
+		// 如果此处设置为 15 ，那么 会创建 45个信道， 应用程序层面的 45 个消费者（阻塞队列）
 		factory.setConcurrentConsumers(2);  
 		factory.setAcknowledgeMode(AcknowledgeMode.NONE); 
 		return factory;
@@ -82,6 +82,21 @@ public class CommonConfiguration {
 		factory.setConnectionFactory(connectionFactory);
 		factory.setMaxConcurrentConsumers(20);
 		factory.setConcurrentConsumers(1);  
+		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL); 
+		return factory;
+	}
+	
+	
+	/**
+	 * 削峰监听工厂
+	 */
+	@Bean(name = "manualRateLimitRabbitListenerContainerFactory")
+	public SimpleRabbitListenerContainerFactory manualRateLimitRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setMaxConcurrentConsumers(100);
+		factory.setConcurrentConsumers(50);
+		factory.setPrefetchCount(2500);  
 		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL); 
 		return factory;
 	}

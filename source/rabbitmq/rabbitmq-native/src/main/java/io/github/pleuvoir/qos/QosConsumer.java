@@ -70,6 +70,8 @@ public class QosConsumer {
 		// 开启 qos，  150  表示 一次确认的条数， true 代表整个信道每次 150 ， false 是每个消费者一次 150 ，一般不会同时设置
 		channel.basicQos(150, true);
 		
+	//	channel.basicQos(150); false
+		
 		channel.basicConsume(queueName, false, consumer);
 		System.out.println("QosConsumer 单个确认等待接收消息 ........");
 		

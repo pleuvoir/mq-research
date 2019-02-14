@@ -66,6 +66,6 @@
         <appender-ref ref="ERROR_FILE" /> -->
     </root>
     
-    <!--  <logger name="org.springframework.amqp.rabbit" level="DEBUG"/> -->
+     <logger name="org.springframework.amqp.rabbit" level="INFO"/>
      
 </configuration>
