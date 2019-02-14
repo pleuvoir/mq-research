@@ -19,7 +19,7 @@ import com.rabbitmq.client.Channel;
 import io.github.pleuvoir.kit.RabbitConst;
 
 
-//配置监听的哪一个队列，同时在没有 queue和exchange的情况下会去创建并建立绑定关系，有了这个注解变会自动确认
+//配置监听的哪一个队列，同时在没有 queue和exchange的情况下会去创建并建立绑定关系
 @RabbitListener(
 		bindings = @QueueBinding(
 				value = @Queue(RabbitConst.Normal.QUEUE),
