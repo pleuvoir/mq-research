@@ -1,7 +1,7 @@
 package io.github.pleuvoir.rabbitmq.callback;
 
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.stereotype.Component;
 
 /**

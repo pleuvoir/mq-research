@@ -32,6 +32,15 @@ public class RabbitConst {
 		public static final String ROUTING_KEY 	= "r.normal";
 	}
 	
+	public static class Repeat {
+
+		public static final String EXCHANGE 	= "x.repeat";
+
+		public static final String QUEUE 		= "q.repeat";
+
+		public static final String ROUTING_KEY 	= "r.repeat";
+	}
+	
 	public static class Topic {
 
 		public static final String EXCHANGE 	= "x.topic";
