@@ -21,7 +21,7 @@ import io.github.pleuvoir.kit.RabbitConst;
 
 
 
-//使用一个队列监听所有发送到此交换机的且是B机器微信信息的消息
+//使用一个随机队列监听所有发送到此交换机的且是B机器微信信息的消息
 @RabbitListener(
 		bindings = @QueueBinding(
 				value = @Queue,

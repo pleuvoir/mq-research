@@ -1,3 +1,4 @@
 *.classpath
 *.prefs
 source/rabbitmq/rabbitmq-native/.project
+source/rabbitmq/rabbitmq-springboot/.project

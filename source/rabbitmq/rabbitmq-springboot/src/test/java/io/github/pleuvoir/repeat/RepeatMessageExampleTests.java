@@ -40,7 +40,7 @@ public class RepeatMessageExampleTests {
 			countDownLatch.countDown();
 		}
 		// 先启动单元测试，当报错时启动 springboot 充当另一个消费者
-		TimeUnit.SECONDS.sleep(60);
+		TimeUnit.SECONDS.sleep(50);
 	}
 	
 	
