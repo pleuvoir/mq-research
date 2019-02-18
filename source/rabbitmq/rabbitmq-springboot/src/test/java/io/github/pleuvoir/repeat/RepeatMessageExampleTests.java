@@ -25,7 +25,7 @@ public class RepeatMessageExampleTests {
 	private RepeatMessageProducer repeatMessageProducer;
 	
 	
-	int num = 1;
+	int num = 1000;
 	
 	CountDownLatch countDownLatch = new CountDownLatch(num);
 

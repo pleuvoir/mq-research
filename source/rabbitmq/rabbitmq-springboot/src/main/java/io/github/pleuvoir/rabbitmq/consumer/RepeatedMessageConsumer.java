@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.rabbitmq.client.Channel;
 
 import io.github.pleuvoir.kit.RabbitConst;
-import io.github.pleuvoir.rabbitmq.helper.RabbitConsumeTemplate;
+import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitConsumeTemplate;
 import io.github.pleuvoir.service.UserAccService;
 
 
@@ -33,12 +33,12 @@ public class RepeatedMessageConsumer {
 	private static Logger logger = LoggerFactory.getLogger(RepeatedMessageConsumer.class);
 
 	@Autowired
-	RabbitConsumeTemplate rabbitConsumeTemplate;
+	ReliableRabbitConsumeTemplate rabbitConsumeTemplate;
 	@Autowired
 	UserAccService userAccService;
 
 	@RabbitHandler
-	public void onMessage(String payload, Message message, Channel channel) throws Throwable  {
+	public void onMessage(String payload, Message message, Channel channel) throws IOException   {
 
 		MessageProperties messageProperties = message.getMessageProperties();
 		String messageId = messageProperties.getMessageId();
@@ -47,8 +47,10 @@ public class RepeatedMessageConsumer {
 
 		
 		rabbitConsumeTemplate.excute(() -> {
+			
 			userAccService.update(String.valueOf(ThreadLocalRandom.current().nextInt(9999)));
-		}, false, message, channel);
+
+		}, message, channel);
 		
 	
 	}

@@ -1,7 +1,6 @@
 package io.github.pleuvoir.helper;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import io.github.pleuvoir.rabbitmq.helper.RabbitConsumeTemplate;
-import io.github.pleuvoir.rabbitmq.helper.RabbitConsumeTemplate.RabbitConsumeCallBack;
-import io.github.pleuvoir.service.BussinessException;
+import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitConsumeTemplate;
 import io.github.pleuvoir.service.UserAccService;
-import io.github.pleuvoir.service.UserAccServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +19,7 @@ public class RabbitConsumeTemplateTest {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(RabbitConsumeTemplateTest.class);
 
-	@Autowired RabbitConsumeTemplate rabbitConsumeTemplate;
+	@Autowired ReliableRabbitConsumeTemplate rabbitConsumeTemplate;
 	@Autowired UserAccService userAccService;
 	
 	@Test
@@ -33,13 +29,12 @@ public class RabbitConsumeTemplateTest {
 
 		try {
 			
-			this.rabbitConsumeTemplate.excute(new RabbitConsumeCallBack<Void>() {
-				@Override
-				public Void doInTransaction() throws BussinessException  {
-					userAccService.update(userId);
-					return null;
-				}
-			}, messageId);
+//			this.rabbitConsumeTemplate.excute(new RabbitConsumeCallBack() {
+//				@Override
+//				public void doInTransaction() throws BussinessException  {
+//					userAccService.update(userId);
+//				}
+//			}, messageId);
 			
 		} catch (Throwable e) {
 			LOGGER.error("出现错误，可以考虑回滚或者重试 {}", e.getMessage());

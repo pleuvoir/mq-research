@@ -18,17 +18,13 @@ import org.springframework.data.keyvalue.core.KeyValueTemplate;
 import io.github.pleuvoir.redis.RabbitMessageLogCache;
 import io.github.pleuvoir.redis.RabbitMessageStatusEnum;
 
-public class ReliableRabbitTemplate extends RabbitTemplate {
+public class ReliableRabbitPublishTemplate extends RabbitTemplate {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(ReliableRabbitTemplate.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(ReliableRabbitPublishTemplate.class);
 	
 	@Autowired KeyValueTemplate keyValueTemplate;
-	
-	public ReliableRabbitTemplate() {
-		super();
-	}
 
-	public ReliableRabbitTemplate(ConnectionFactory connectionFactory) {
+	public ReliableRabbitPublishTemplate(ConnectionFactory connectionFactory) {
 		super(connectionFactory);
 	}
 

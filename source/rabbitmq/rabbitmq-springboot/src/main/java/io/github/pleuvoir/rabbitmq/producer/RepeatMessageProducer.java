@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import io.github.pleuvoir.kit.RabbitConst;
 import io.github.pleuvoir.model.NormalMessage;
-import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitTemplate;
+import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitPublishTemplate;
 
 @Component
 public class RepeatMessageProducer  {
@@ -17,7 +17,7 @@ public class RepeatMessageProducer  {
 
 	@Autowired
 	@Qualifier("reliableRabbitTemplate")
-	private ReliableRabbitTemplate rabbitTemplate;
+	private ReliableRabbitPublishTemplate rabbitTemplate;
 
 	public void send(NormalMessage data) {
 		logger.info("发送 Repeat 消息，{}", data.toJSON());

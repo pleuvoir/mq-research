@@ -23,13 +23,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 
 import io.github.pleuvoir.rabbitmq.creator.FixedTimeQueueHelper;
-import io.github.pleuvoir.rabbitmq.helper.RabbitConsumeTemplate;
-import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitTemplate;
+import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitConsumeTemplate;
+import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitPublishTemplate;
 
 @EnableRedisRepositories(basePackages="io.github.pleuvoir.redis", repositoryImplementationPostfix = "Repository")
 @Configuration
 @AutoConfigureAfter({ RedisAutoConfiguration.class, RabbitAutoConfiguration.class })
-@Import(RabbitConsumeTemplate.class)
+@Import(ReliableRabbitConsumeTemplate.class)
 public class CommonConfiguration {
 
 	/**
@@ -65,12 +65,12 @@ public class CommonConfiguration {
 	}
     
     
-    // 可靠消息模板 ，每次发送都会在 redis 中记录日志
+    // 优先使用可靠消息模板 ，每次发送都会在 redis 中记录日志
     @Primary
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
   	@Bean
-	public ReliableRabbitTemplate reliableRabbitTemplate(ConnectionFactory connectionFactory) {
-		return new ReliableRabbitTemplate(connectionFactory);
+	public ReliableRabbitPublishTemplate reliableRabbitTemplate(ConnectionFactory connectionFactory) {
+		return new ReliableRabbitPublishTemplate(connectionFactory);
 	}
 	
     
