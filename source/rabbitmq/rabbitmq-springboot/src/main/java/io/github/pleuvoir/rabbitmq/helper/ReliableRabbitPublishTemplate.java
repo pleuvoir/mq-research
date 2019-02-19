@@ -30,7 +30,7 @@ public class ReliableRabbitPublishTemplate extends RabbitTemplate {
 
 	@PostConstruct
 	void setup() {
-		this.setBeforePublishPostProcessors(new MessagePostProcessor() {
+		super.setBeforePublishPostProcessors(new MessagePostProcessor() {
 			@Override
 			public Message postProcessMessage(Message message) throws AmqpException {
 				MessageProperties messageProperties = message.getMessageProperties();

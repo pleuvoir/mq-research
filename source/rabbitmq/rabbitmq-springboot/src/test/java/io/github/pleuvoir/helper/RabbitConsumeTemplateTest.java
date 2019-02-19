@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitConsumeTemplate;
-import io.github.pleuvoir.service.UserAccService;
+import io.github.pleuvoir.service.LiveBeginService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,7 +20,7 @@ public class RabbitConsumeTemplateTest {
 	private final static Logger LOGGER = LoggerFactory.getLogger(RabbitConsumeTemplateTest.class);
 
 	@Autowired ReliableRabbitConsumeTemplate rabbitConsumeTemplate;
-	@Autowired UserAccService userAccService;
+	@Autowired LiveBeginService userAccService;
 	
 	@Test
 	public void testTemplate() throws InterruptedException {

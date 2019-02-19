@@ -1,12 +1,10 @@
 package io.github.pleuvoir.rabbitmq.consumer;
 
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -19,7 +17,9 @@ import com.rabbitmq.client.Channel;
 
 import io.github.pleuvoir.kit.RabbitConst;
 import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitConsumeTemplate;
-import io.github.pleuvoir.service.UserAccService;
+import io.github.pleuvoir.service.LiveBeginException;
+import io.github.pleuvoir.service.LiveBeginService;
+import io.github.pleuvoir.service.LiveNotBeginException;
 
 
 @RabbitListener(containerFactory = "manualRabbitListenerContainerFactory", 
@@ -35,24 +35,51 @@ public class RepeatedMessageConsumer {
 	@Autowired
 	ReliableRabbitConsumeTemplate rabbitConsumeTemplate;
 	@Autowired
-	UserAccService userAccService;
+	LiveBeginService liveBeginService;
 
 	@RabbitHandler
-	public void onMessage(String payload, Message message, Channel channel) throws IOException   {
+	public void onMessage(String payload, Message message, Channel channel) throws Throwable    {
 
-		MessageProperties messageProperties = message.getMessageProperties();
-		String messageId = messageProperties.getMessageId();
-		
-		logger.info("接收到消息：{}，payload={}", payload, messageId);
+		logger.info("接收到消息：{}", payload);
+	//	try {
+//			rabbitConsumeTemplate.excute(new RabbitConsumeCallBack() {
+//				@Override
+//				public void doInTransaction() throws LiveBeginException, LiveNotBeginException {
+//					liveBeginService.update(String.valueOf(ThreadLocalRandom.current().nextInt(9999)));
+//				}
+//			}, message, channel);
 
-		
-		rabbitConsumeTemplate.excute(() -> {
+	//	} catch (Throwable e) {
 			
-			userAccService.update(String.valueOf(ThreadLocalRandom.current().nextInt(9999)));
-
-		}, message, channel);
+		//	rabbitConsumeTemplate.ignoreExceptionAndLog(e, message);
+//
+//			if (e instanceof LiveBeginException) {
+//				return;
+//			} else if (e instanceof LiveNotBeginException) {
+//				mqConsumeTimeFaultTolerant();
+//			} else {
+//				e.printStackTrace();
+//				throw e;
+//			}
+	//	}
 		
-	
+		try {
+			rabbitConsumeTemplate.excute(() -> {
+				liveBeginService.update(String.valueOf(ThreadLocalRandom.current().nextInt(9999)));
+			}, message, channel);
+
+		} catch (Throwable e) {
+			rabbitConsumeTemplate.logException(e, message);
+			if (e instanceof LiveBeginException) {
+				return;
+			} else if (e instanceof LiveNotBeginException) {
+				mqConsumeTimeFaultTolerant();
+			}
+		}
+	}
+
+	private void mqConsumeTimeFaultTolerant() {
+		logger.info("重试。。");
 	}
 
 	

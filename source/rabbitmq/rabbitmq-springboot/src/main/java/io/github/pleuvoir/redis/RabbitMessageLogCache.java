@@ -7,8 +7,10 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.TimeToLive;
 
+import io.github.pleuvoir.kit.ToJSON;
 
-public class RabbitMessageLogCache implements Serializable {
+
+public class RabbitMessageLogCache implements Serializable, ToJSON {
 
 	private static final long serialVersionUID = 1333938552046986878L;
 

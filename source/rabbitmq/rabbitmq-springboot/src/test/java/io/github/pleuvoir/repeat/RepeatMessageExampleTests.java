@@ -25,7 +25,7 @@ public class RepeatMessageExampleTests {
 	private RepeatMessageProducer repeatMessageProducer;
 	
 	
-	int num = 1000;
+	int num = 600;
 	
 	CountDownLatch countDownLatch = new CountDownLatch(num);
 
@@ -35,12 +35,18 @@ public class RepeatMessageExampleTests {
 		NormalMessage msg = new NormalMessage();
 		msg.setPayload("重复消息内容");
 		
+//		for (int i = 0; i < num; i++) {
+//			new Thread(new ProducerThead(msg)).start();
+//			countDownLatch.countDown();
+//		}
+		
 		for (int i = 0; i < num; i++) {
 			new Thread(new ProducerThead(msg)).start();
 			countDownLatch.countDown();
 		}
+		
 		// 先启动单元测试，当报错时启动 springboot 充当另一个消费者
-		TimeUnit.SECONDS.sleep(50);
+		TimeUnit.SECONDS.sleep(500);
 	}
 	
 	

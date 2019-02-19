@@ -4,6 +4,6 @@ import io.github.pleuvoir.rabbitmq.helper.ReliableExcuteWithTransaction.RabbitCo
 
 public interface ExcuteWithTransaction {
 
-	void actualExcute(RabbitConsumeCallBack callBack, String messageId) throws Throwable;
+	void actualExcute(RabbitConsumeCallBack callBack, String messageId) throws Exception;
 
 }

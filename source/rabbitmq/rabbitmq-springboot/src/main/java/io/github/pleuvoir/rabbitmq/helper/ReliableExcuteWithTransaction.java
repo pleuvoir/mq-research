@@ -2,6 +2,7 @@ package io.github.pleuvoir.rabbitmq.helper;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,15 @@ public class ReliableExcuteWithTransaction implements ExcuteWithTransaction {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	@Override
-	public void actualExcute(RabbitConsumeCallBack callBack, String messageId) throws Throwable {
+	public void actualExcute(RabbitConsumeCallBack callBack, String messageId) throws Exception {
+		
+		if (StringUtils.isBlank(messageId)) {
+			LOGGER.warn("*messageId 为空，忽略此次消息消费。");
+			return;
+		}
+		
+		Assert.notNull(callBack, "业务回调不能为空");
+		
 		Optional<RabbitMessageLogCache> rabbitMessageLogOptional = keyValueTemplate.findById(messageId, RabbitMessageLogCache.class);
 		if (!rabbitMessageLogOptional.isPresent()) {
 			LOGGER.warn("*[messageId={}] 缓存中未能获取消息日志，忽略此次消息消费。", messageId);
@@ -36,20 +45,18 @@ public class ReliableExcuteWithTransaction implements ExcuteWithTransaction {
 			return;
 		}
 
-		Assert.notNull(callBack, "rabbitConsumeCallBack 不能为空");
-
+		// 执行业务
 		callBack.doInTransaction();
 
-		RabbitMessageLogCache rabbitMessageLogCache = new RabbitMessageLogCache();
-		rabbitMessageLogCache.setMessageId(messageId);
-		rabbitMessageLogCache.setMessageStatus(RabbitMessageStatusEnum.CONSUMER_SUCCESS);
-		keyValueTemplate.update(rabbitMessageLogCache);
+		prevMessageLogCache.setMessageStatus(RabbitMessageStatusEnum.CONSUMER_SUCCESS);
+		keyValueTemplate.update(prevMessageLogCache);
 		
 		LOGGER.info("*[messageId={}] 已更新消息日志为成功。", messageId);
 	}
 
 	@FunctionalInterface
 	public interface RabbitConsumeCallBack {
-		void doInTransaction() throws Throwable;
+		void doInTransaction() throws Exception;
 	}
+	
 }

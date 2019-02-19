@@ -29,7 +29,7 @@ import io.github.pleuvoir.rabbitmq.helper.ReliableRabbitPublishTemplate;
 @EnableRedisRepositories(basePackages="io.github.pleuvoir.redis", repositoryImplementationPostfix = "Repository")
 @Configuration
 @AutoConfigureAfter({ RedisAutoConfiguration.class, RabbitAutoConfiguration.class })
-@Import(ReliableRabbitConsumeTemplate.class)
+@Import({ReliableRabbitConsumeTemplate.class})
 public class CommonConfiguration {
 
 	/**
@@ -48,8 +48,9 @@ public class CommonConfiguration {
 	public SimpleRabbitListenerContainerFactory manualRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 		factory.setConnectionFactory(connectionFactory);
-		factory.setMaxConcurrentConsumers(20);
+		factory.setMaxConcurrentConsumers(1);
 		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+		factory.setPrefetchCount(1);
 		return factory;
 	}
 
