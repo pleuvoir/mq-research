@@ -71,7 +71,7 @@
 
 #### Java 客户端原生用法
 
-* [Topic/Queue消息的发送与同异步接收](https://github.com/pleuvoir/mq-research/tree/master/source/rabbitmq/activemq-native/src/main/java/io/github/pleuvoir/normal)
+* [Topic/Queue消息的发送与同异步接收](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-native/src/main/java/io/github/pleuvoir/normal)
 
 
 ### :three: RocketMQ
