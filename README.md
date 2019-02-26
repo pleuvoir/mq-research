@@ -73,6 +73,11 @@
 
 * [Topic/Queue消息的发送与同异步接收](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-native/src/main/java/io/github/pleuvoir/normal)
 
+#### 集成 springboot 
+
+[发送 queue 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/queue)
+[发送 topic 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/topic)
+[request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/replyto)
 
 ### :three: RocketMQ
 
