@@ -13,7 +13,7 @@
 
 :memo: [RabbitMQ 总结](https://github.com/pleuvoir/mq-research/blob/master/docs/01%20rabbitmq/RabbitMQ%20Summary.md)
 
-#### 参考资料
+#### 拓展资料
 
 [朱小厮的博客](https://blog.csdn.net/u013256816)
 
@@ -75,9 +75,9 @@
 
 #### 集成 springboot 
 
-[发送 queue 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/queue)
-[发送 topic 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/topic)
-[request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/replyto)
+* [发送 queue 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/queue)
+* [发送 topic 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/topic)
+* [request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/replyto)
 
 ### :three: RocketMQ
 
