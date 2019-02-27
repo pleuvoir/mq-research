@@ -79,7 +79,7 @@
 * [发送 queue 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/queue)
 * [发送 topic 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/topic)
 * [request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/replyto)
-* [延迟订单](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/delay)
+* [延迟订单](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/delay)
 
 ### :three: RocketMQ
 
