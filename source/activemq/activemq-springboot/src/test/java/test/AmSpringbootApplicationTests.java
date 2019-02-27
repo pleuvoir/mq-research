@@ -1,5 +1,6 @@
 package test;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.jms.Destination;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import io.github.pleuvoir.ActiveMqConfiguration;
+import io.github.pleuvoir.delay.DelayMqProducer;
+import io.github.pleuvoir.delay.OrderExp;
 import io.github.pleuvoir.normal.queue.ProducerQueue;
 import io.github.pleuvoir.normal.topic.ProducerTopic;
 import io.github.pleuvoir.replyto.ProducerR;
@@ -27,6 +30,8 @@ public class AmSpringbootApplicationTests {
 	private ProducerR producerR;
 	@Autowired
 	private ProducerTopic producerTopic;
+	@Autowired
+	private DelayMqProducer delayMqProducer;
 
 	// 测试普通 queue
 	@Test
@@ -56,6 +61,21 @@ public class AmSpringbootApplicationTests {
 			producerR.sendMessage(destination, "NO:" + i + ";my name is reply deep!!!");
 		}
 		TimeUnit.SECONDS.sleep(5);
+	}
+	
+	// 测试 delay 模式
+	@Test
+	public void testDelay() throws InterruptedException {
+		Random r = new Random();
+		OrderExp orderExp;
+		long expireTime = r.nextInt(3) + 5;// 订单的超时时长，单位秒
+		orderExp = new OrderExp();
+		String orderNo = "你好DD00_" + expireTime + "S";
+		orderExp.setOrderNo(orderNo);
+		orderExp.setOrderNote(orderNo);
+		orderExp.setOrderStatus("0");
+		delayMqProducer.orderDelay(orderExp, expireTime);
+		TimeUnit.SECONDS.sleep(50);
 	}
 
 }

@@ -72,12 +72,14 @@
 #### Java 客户端原生用法
 
 * [Topic/Queue消息的发送与同异步接收](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-native/src/main/java/io/github/pleuvoir/normal)
+* [可靠消息，事务，应答](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-native/src/main/java/io/github/pleuvoir/reliable)
 
 #### 集成 springboot 
 
 * [发送 queue 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/queue)
 * [发送 topic 消息](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/topic)
-* [request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/replyto)
+* [request-response 模式](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/replyto)
+* [延迟订单](https://github.com/pleuvoir/mq-research/blob/master/source/activemq/activemq-springboot/src/main/java/io/github/pleuvoir/normal/delay)
 
 ### :three: RocketMQ
 
