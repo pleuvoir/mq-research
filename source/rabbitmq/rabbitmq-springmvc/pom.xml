@@ -22,7 +22,7 @@
     <rabbitmq.ampq.version>5.3.0</rabbitmq.ampq.version>
     <rabbitmq.http.version>2.1.0.RELEASE</rabbitmq.http.version>
 
-    <apache.http.version>4.5.3</apache.http.version>
+    <apache.http.version>4.5.13</apache.http.version>
     <fastjson.version>1.2.47</fastjson.version>
     <lang3.version>3.7</lang3.version>
     <text.version>1.4</text.version>
